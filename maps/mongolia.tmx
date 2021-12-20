@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="tmw_desert_spacing.tsx"/>
  <layer id="1" name="Слой тайлов 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJztwwEJAAAMBKFL8v1jDpZDwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/AXYxlB0=
+   eJztmkkSgzAMBDnnEfz/mTknxWasZSz1oY92aaZJAQ77tm07AAAAAAAAAAAAAAAAAAAAAAAAyPMZJHveqrzpFze+PjKcgp8Pj706Y+0EL3o94sWuw5keudf7OMHB2h6y56/A2z7xoOFhn1gHth7O9sFPjoMRP9mZlRi9dq17xMnc9fk52MNqpuxesjxY9sY7ul2Xaj66ebF6TvL20cHJTL6rtRHPYdndeWXzWOfdFz5+12T7eDrHarz14bFvZAZVZt41rPeNzKDM0Tucxb2a34idm6uMT6/HyHtMVR/WXR6dg3mcGeJDq8PuPiw6sO6wqpOo+zU+nmXChw4jmdR8VHMy+syDD38fkdnxUd9HFSde54r4iMng8Z87Pt5lsDrr8P4PMbvT2fmfnCut8i3P6j7uOl/tDLCSjyMHKz6bVnSycl/40OoLH1p94UOnK1yMdYUPDaK+zcHHvYPI77GyMyvh/d6CjzEHCrNkz9DdQWcXih66+8ieYcXZumVWnSsit2J2xZk6Z1ecqWt+pVmye8juQmEGJbL7wMW5k+hucKHhJvs3uSKz54r/67PPKatx1y99AwAAAAAAAAAAAIAqX1R9ex0=
   </data>
  </layer>
 </map>
