@@ -81,13 +81,13 @@ while 1:
         if 1 < cam_x:
             cam_x -= 1
     if key[pygame.K_d]:
-        if cam_x < 232:
+        if cam_x < 700:
             cam_x += 1
     if key[pygame.K_w]:
         if 1 < cam_y:
             cam_y -= 1
     if key[pygame.K_s]:
-        if cam_y < 258:
+        if cam_y < 700:
             cam_y += 1
 
     for i in chunks_on_screen():
