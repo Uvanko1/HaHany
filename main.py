@@ -6,6 +6,7 @@ from constans import *
 pygame.init()
 
 cam_x, cam_y = 0, 0
+cam_coords = 0, 0, 1920, 1080
 
 window = pygame.display.set_mode(size)
 screen = pygame.transform.scale(window, size)
@@ -46,12 +47,20 @@ class Chunk:
     def __init__(self, x, y):
         self.x, self.y = x, y
         self.map = world_map
+        self.cam_coords = cam_coords
 
     def render(self):
-        for y in range(chunk_size + 22):
-            for x in range(chunk_size):
-                texture = self.map.get_tile_image(x, y, 0)
-                screen.blit(texture, (self.x + x * tile_size - cam_x, self.y + y * tile_size - cam_y))
+        try:
+            for x in range(self.cam_coords[2] // 32):
+                for y in range(self.cam_coords[3] // 32):
+                    if 0 <= x + cam_x <= self.map.width and 0 <= y + cam_y < self.map.height:
+                        texture = self.map.get_tile_image(x + cam_x, y + cam_y, 0)
+                        screen.blit(texture, (self.x + x * tile_size - cam_x, self.y + y * tile_size - cam_y))
+                        self.cam_coords = 0 + cam_x, 0 + cam_y, 1920 + cam_x, 1080 + cam_y
+                    else:
+                        break
+        except ValueError:
+            pass
 
 
 chunks = []
@@ -68,13 +77,13 @@ while 1:
 
     key = pygame.key.get_pressed()
     if key[pygame.K_a]:
-        cam_x -= 20
+        cam_x -= 1
     if key[pygame.K_d]:
-        cam_x += 20
+        cam_x += 1
     if key[pygame.K_w]:
-        cam_y -= 20
+        cam_y -= 1
     if key[pygame.K_s]:
-        cam_y += 20
+        cam_y += 1
 
     for i in chunks_on_screen():
         chunks[i].render()
