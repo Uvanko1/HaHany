@@ -5,17 +5,14 @@ from constans import *
 
 pygame.init()
 
-size = [800, 800]
-res = [400, 400]
-
 cam_x, cam_y = 0, 0
 
 window = pygame.display.set_mode(size)
-screen = pygame.transform.scale(window, res)
+screen = pygame.transform.scale(window, size)
 
 clock = pygame.time.Clock()
 
-chunk_size = 8
+chunk_size = 65
 world_map = pytmx.load_pygame(f'{MAPS_DIR}/{MAP_FILE}')
 tile_size = world_map.tilewidth
 textures = None
@@ -51,7 +48,7 @@ class Chunk:
         self.map = world_map
 
     def render(self):
-        for y in range(chunk_size):
+        for y in range(chunk_size + 22):
             for x in range(chunk_size):
                 texture = self.map.get_tile_image(x, y, 0)
                 screen.blit(texture, (self.x + x * tile_size - cam_x, self.y + y * tile_size - cam_y))
@@ -71,13 +68,13 @@ while 1:
 
     key = pygame.key.get_pressed()
     if key[pygame.K_a]:
-        cam_x -= 1
+        cam_x -= 20
     if key[pygame.K_d]:
-        cam_x += 1
+        cam_x += 20
     if key[pygame.K_w]:
-        cam_y -= 1
+        cam_y -= 20
     if key[pygame.K_s]:
-        cam_y += 1
+        cam_y += 20
 
     for i in chunks_on_screen():
         chunks[i].render()
