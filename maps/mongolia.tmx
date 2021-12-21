@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="65" height="87" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="300" height="300" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" source="tmw_desert_spacing.tsx"/>
- <layer id="1" name="Слой тайлов 1" width="65" height="87">
+ <layer id="1" name="Слой тайлов 1" width="300" height="300">
   <data encoding="base64" compression="zlib">
-   eJztmDEWgzAMQ5k5RMfe/4jd+ygPasmSgwaNONaPY5y8t217RVEURVEURVEURVEURVEURVEUGWu/KXW+DO8VXmoPCAYKjk5C5h4O82sCnftUFog+t0K/fPJ/oupdnX/Vd7zz68VJqP2bNjt35OnG4+4eoXNXcajsw34QA5VTp3dkrtNmRdSdj71/TBao/s5mwOJQiXn2bcf/Q10DV/4TLAbo+KwZr6Ofo+rhXwad+8ReqzILdOxRVz0czTWIfjepFn4xPWOAOA/qvtaV/9G9g3Evcmawch0g1mXMe92xVmVw55yuzKBrTdUZRtXAygyc13PMyZFBJS7r7rQyA8Yb5CQGyns7M/bVOX7KuznrjXTCPQcdm3XH62DQEX9CjmEQBhMYxP+zGXS9ubsxYP5fXf2z5wpXBkrPSgZOvrv9O3pXMFB7VefmykDRB9Se1XsTBn4clLk4nIvkoPf/zSF9qY+Huvb+YYF471ffxRhMVvToqg+JBX3Z
+   eJzt3T2SozAQBlDHc4gN5/5H3JTaYrwD6j+ZF7zAAU2bKn8lhGS+X6/XHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICDr4u6+wWe507+yC6gQ0TeyC2gQmTOyCwgW3RmyS0gU3TOyC0gU8Qcurl4oIrnhcB0qznV3T/w2e7mjZwCqqzkjZwCKkSNi+zPATJUZIrsAu64OvaJzhmZBbyzMr75OqkR1VP3dQHmiJqLeve5uz/gM0T9t0J0zbNzyC14tqjnfJE1r5wLeIaV3/+7YyueI3ZfO6DWSlZl1M3uG9hX1tr0ijwxzoJnuZtXGXUrvwOwn5W1VtF1K78DsKezNZ4Rc+nGWECmY069y6uIe8LoNaXd1w7oEZU1Z/sQM/Y0yyt4roqxkbwCIlQ8A4zOGJkFz1M1ny6vgBVX5pXkFdDpym9+Wl5l1QTmufrMTl4BXTLWuWceX1UTmOcT8iqzLjBD1r7nzOOr6wIz3BlbySugw9V59mnr2ytrA71+u69vl3d1ySt4hp/eH7HTHmV5Bc+S9V8Kx/rZ/XdfQ+AzyCtgF/IK2IW8AnYgq4AdVLzPRl4Bq6revSWvgDsy10T8dL7u7wzsIXvd1m/O330NgLk68+msl+4egFkmZdSxp+4egDkm5tSxt+4egDkmZ8Lk3oB6UzNhal9AH/eCwE4mZsPEnoAZJuXDpF6AmSbcG07oAdhDd17IKuCKrjVZsgpYUZFd3WM64LOs7nv+9/jufdTAc/wvf+QRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5PgLfKEcUA==
   </data>
  </layer>
 </map>
