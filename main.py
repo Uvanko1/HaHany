@@ -8,8 +8,8 @@ pygame.init()
 cam_x, cam_y = 1, 1
 cam_coords = [0, 0, 1920, 1080]
 
-window = pygame.display.set_mode(size)
-screen = pygame.transform.scale(window, size)
+window = pygame.display.set_mode(WINDOW_SIZE)
+screen = pygame.transform.scale(window, WINDOW_SIZE)
 
 clock = pygame.time.Clock()
 
@@ -51,12 +51,14 @@ class Chunk:
 
     def render(self):
         try:
-            for x in range(self.cam_coords[2] // title_size):
-                for y in range(self.cam_coords[3] // title_size):
-                    if 0 < x + cam_x <= self.map.width and 0 < y + cam_y < self.map.height:
-                        texture = self.map.get_tile_image(x + cam_x, y + cam_y, 0)
-                        screen.blit(texture, (self.x + x * tile_size, self.y + y * tile_size))
-                        self.cam_coords = 0 + cam_x, 0 + cam_y, 1920 + cam_x, 1080 + cam_y
+            for i in range(2):
+                for x in range(self.cam_coords[2] // title_size):
+                    for y in range(self.cam_coords[3] // title_size):
+                        if 0 < x + cam_x <= self.map.width and 0 < y + cam_y < self.map.height:
+                            texture = self.map.get_tile_image(x + cam_x, y + cam_y, i)
+                            if texture is not None:
+                                screen.blit(texture, (self.x + x * tile_size, self.y + y * tile_size))
+                                self.cam_coords = 0 + cam_x, 0 + cam_y, 1920 + cam_x, 1080 + cam_y
         except ValueError:
             pass
 
@@ -74,8 +76,7 @@ while 1:
             exit()
 
     key = pygame.key.get_pressed()
-    print(cam_x)
-    print(cam_y)
+    print(cam_x, cam_y)
     if key[pygame.K_a]:
         if 1 < cam_x:
             cam_x -= 1
@@ -91,7 +92,7 @@ while 1:
 
     for i in chunks_on_screen():
         chunks[i].render()
-    window.blit(pygame.transform.scale(screen, size), (0, 0))
+    window.blit(pygame.transform.scale(screen, WINDOW_SIZE), (0, 0))
     pygame.display.update()
     clock.tick(480)
 
