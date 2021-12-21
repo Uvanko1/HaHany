@@ -1,5 +1,5 @@
 MAPS_DIR = 'maps'
-MAP_FILE = 'mongolia.tmx'
+MAP_FILE = 'безымянный.tmx'
 size = [1920, 1060]
 WINDOW_SIZE = 1920, 1080
 GAME_NAME = 'Чингисхан'
