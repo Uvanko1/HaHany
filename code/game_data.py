@@ -1,3 +1,3 @@
 mangolia_1 = {
-    'green': '../maps/mongolia/mongolia..csv',
+    'test': '../maps/mongolia/test.csv',
 }
