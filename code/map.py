@@ -4,6 +4,7 @@ from settings import tile_size
 from tiles import Tile, StaticTile
 import numba
 
+
 def create_tile_group(layout, type):
     sprite_group = pygame.sprite.Group()
     for row_index, row in enumerate(layout):
@@ -23,7 +24,7 @@ def create_tile_group(layout, type):
 class Map:
     def __init__(self, map_data, surface):
         self.display_surface = surface
-        self.world_shift = -5
+        self.world_shift = -1
         test_layout = import_csv_layout(map_data['test'])
         self.test_sprites = create_tile_group(test_layout, 'test')
 
