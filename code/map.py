@@ -13,7 +13,7 @@ def create_tile_group(layout, type):
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if type == 'test':
-                    test_tile_list = import_cut_graphic('../graphics/mongolia_tiles/test2.png')
+                    test_tile_list = import_cut_graphic('../graphics/mongolia_tiles/Слой 2.png')
                     tile_surface = test_tile_list[int(val)]
                     sprite = StaticTile(tile_size, x, y, tile_surface)
                     sprite_group.add(sprite)
