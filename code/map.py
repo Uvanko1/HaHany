@@ -1,13 +1,8 @@
 import pygame
 
-from support import import_csv_layout, import_cut_graphic, import_cut_map_graphic
+from support import import_csv_layout, import_cut_graphic
 from settings import tile_size
 from tiles import Tile, HorseTile
-
-
-def create_map_group():
-    map_list = import_cut_map_graphic('../maps/map_data/mongolian.png')
-    print(len(map_list))
 
 
 def create_tile_group(layout, type):
@@ -35,5 +30,3 @@ class Map:
     def run(self):
         self.test_sprites.draw(self.display_surface)
         self.test_sprites.update(self.world_shift)
-
-

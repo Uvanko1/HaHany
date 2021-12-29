@@ -11,6 +11,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 map = Map(mangolia_1, screen)
 map_static = MapStatic()
+shift = 10
 frame = 0
 
 while 1:
@@ -19,17 +20,17 @@ while 1:
     cam_y = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            exit()
         if key[pygame.K_a]:
-            cam_x += 10
+            cam_x += shift
         if key[pygame.K_d]:
-            cam_x -= 10
+            cam_x -= shift
         if key[pygame.K_w]:
-            cam_y += 10
+            cam_y += shift
         if key[pygame.K_s]:
-            cam_y -= 10
+            cam_y -= shift
     screen.fill('grey')
+    # map_static.render(screen)
     map_sprite.update(cam_x, cam_y)
     map_sprite.draw(screen)
     map.run()
