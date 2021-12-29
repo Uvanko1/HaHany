@@ -10,7 +10,6 @@ class Tile(pygame.sprite.Sprite):
     def update(self, shift):
         # self.rect.x += shift
         self.rect.y += shift
-        print(self.rect.y)
 
 
 class HorseTile(Tile):

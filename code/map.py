@@ -1,10 +1,13 @@
 import pygame
 
-from support import import_csv_layout, import_cut_graphic
+from support import import_csv_layout, import_cut_graphic, import_cut_map_graphic
 from settings import tile_size
 from tiles import Tile, HorseTile
 
-map_sprite = pygame.sprite.Group()
+
+def create_map_group():
+    map_list = import_cut_map_graphic('../maps/map_data/mongolian.png')
+    print(len(map_list))
 
 
 def create_tile_group(layout, type):
@@ -25,7 +28,7 @@ def create_tile_group(layout, type):
 class Map:
     def __init__(self, map_data, surface):
         self.display_surface = surface
-        self.world_shift = -1
+        self.world_shift = 0
         test_layout = import_csv_layout(map_data['лошади'])
         self.test_sprites = create_tile_group(test_layout, 'лошади')
 
@@ -34,14 +37,3 @@ class Map:
         self.test_sprites.update(self.world_shift)
 
 
-class MapStatic(pygame.sprite.Sprite):
-    image = pygame.image.load('../maps/map_data/mongolian.png')
-
-    def __init__(self):
-        super().__init__(map_sprite)
-        self.image = MapStatic.image
-        self.rect = self.image.get_rect()
-        print(self.image.get_rect())
-
-    def update(self, shift):
-        self.rect.y += shift
