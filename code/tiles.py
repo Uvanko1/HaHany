@@ -13,7 +13,7 @@ class Tile(pygame.sprite.Sprite):
         print(self.rect.y)
 
 
-class StaticTile(Tile):
+class HorseTile(Tile):
     def __init__(self, size, x, y, surface):
         super().__init__(size, x, y)
         self.image = surface
