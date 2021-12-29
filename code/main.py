@@ -22,13 +22,13 @@ while 1:
             pygame.quit()
             sys.exit()
         if key[pygame.K_a]:
-            cam_x -= 1
+            cam_x += 10
         if key[pygame.K_d]:
-            cam_x += 1
+            cam_x -= 10
         if key[pygame.K_w]:
-            cam_y -= 1
+            cam_y += 10
         if key[pygame.K_s]:
-            cam_y += 1
+            cam_y -= 10
     screen.fill('grey')
     map_sprite.update(cam_x, cam_y)
     map_sprite.draw(screen)
