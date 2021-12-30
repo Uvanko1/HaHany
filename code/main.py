@@ -21,20 +21,19 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-        if key[pygame.K_a]:
-            cam_x += shift
-        if key[pygame.K_d]:
-            cam_x -= shift
-        if key[pygame.K_w]:
-            cam_y += shift
-        if key[pygame.K_s]:
-            cam_y -= shift
+    if key[pygame.K_a]:
+        cam_x += shift
+    if key[pygame.K_d]:
+        cam_x -= shift
+    if key[pygame.K_w]:
+        cam_y += shift
+    if key[pygame.K_s]:
+        cam_y -= shift
     screen.fill('grey')
     # map_static.render(screen)
     map_sprite.update(cam_x, cam_y)
     map_sprite.draw(screen)
     map.run()
-
     pygame.display.update()
     clock.tick(60)
     frame += 1

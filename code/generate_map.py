@@ -18,9 +18,6 @@ def import_cut_map_graphic(path):
     return cut_map_lst
 
 
-print(import_cut_map_graphic('../maps/map_data/mongolian.png'))
-
-
 class MapStatic(pygame.sprite.Sprite):
     image = pygame.image.load('../maps/map_data/mongolian.png')
 
@@ -32,7 +29,10 @@ class MapStatic(pygame.sprite.Sprite):
 
     def update(self, cam_x, cam_y):
         self.rect.x += cam_x
+        chunk_x = self.rect.x // screen_width
         self.rect.y += cam_y
+        chunk_y = self.rect.y // screen_height
+        print(chunk_x, chunk_y)
 
     # сделать функцию Перепечаеву Ивану
     def draw(self, screen):
