@@ -1,39 +1,34 @@
 import pygame
+from PIL import Image
 from settings import screen_width, screen_height
 
-map_sprite = pygame.sprite.Group()
 
-
-def import_cut_map_graphic(path):
-    surface = pygame.image.load(path)
-    chunk_x = int(surface.get_size()[0] // screen_width)
-    chunk_y = int(surface.get_size()[1] // screen_height)
-    cut_map_lst = []
-    for row in range(chunk_y):
-        for col in range(chunk_x):
-            x = col * screen_width
-            y = row * screen_height
-            cut_map = pygame.Rect(x, y, screen_width, screen_height)
-            cut_map_lst.append(cut_map)
-    return cut_map_lst
-
-
-class MapStatic(pygame.sprite.Sprite):
-    image = pygame.image.load('../maps/map_data/mongolian.png')
-
+class MapStatic:
     def __init__(self):
-        super().__init__(map_sprite)
-        self.image = pygame.image.load('../maps/map_data/mongolian.png')
-        self.image = MapStatic.image
-        self.rect = self.image.get_rect()
+        super().__init__()
+        self.chunk_y = None
+        self.chunk_x = None
+        self.im = Image.open('../maps/map_data/mongolian.png')
+        self.map_surf = pygame.image.load('../maps/map_data/mongolian.png')
+        self.crop_im = None
+        self.rect = self.map_surf.get_rect()
+        self.num_chunk_x = int(self.map_surf.get_size()[0] // screen_width)
+        self.num_chunk_y = int(self.map_surf.get_size()[1] // screen_height)
 
     def update(self, cam_x, cam_y):
         self.rect.x += cam_x
-        chunk_x = self.rect.x // screen_width
+        self.chunk_x = self.rect.x // screen_width
         self.rect.y += cam_y
-        chunk_y = self.rect.y // screen_height
-        print(chunk_x, chunk_y)
+        self.chunk_y = self.rect.y // screen_height
 
     # сделать функцию Перепечаеву Ивану
-    def draw(self, screen):
-        pass
+    def render(self, screen):
+        for row in range(self.num_chunk_y):
+            for col in range(self.num_chunk_x):
+                if row == -self.chunk_y and col == -self.chunk_x:
+                    x = col * screen_width
+                    y = row * screen_height
+                    self.crop_im = self.im.crop(
+                        (x, y, x + screen_width, y + screen_height))  # pillow не поддерживает такое высокое изображение
+                    screen.blit(self.crop_im, (0, 0), (self.rect.x, self.rect.y, screen_width, screen_height))
+                    break

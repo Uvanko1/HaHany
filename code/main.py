@@ -2,7 +2,7 @@ import sys
 
 import pygame
 from settings import *
-from generate_map import MapStatic, map_sprite
+from generate_map import MapStatic
 from map import Map
 from game_data import mangolia_1
 
@@ -31,8 +31,8 @@ while 1:
         cam_y -= shift
     screen.fill('grey')
     # map_static.render(screen)
-    map_sprite.update(cam_x, cam_y)
-    map_sprite.draw(screen)
+    map_static.update(cam_x, cam_y)
+    map_static.render(screen)
     map.run()
     pygame.display.update()
     clock.tick(60)
