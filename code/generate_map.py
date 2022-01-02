@@ -33,7 +33,3 @@ class MapStatic(pygame.sprite.Sprite):
         self.rect.y += cam_y
         chunk_y = self.rect.y // screen_height
         print(chunk_x, chunk_y)
-
-    # сделать функцию Перепечаеву Ивану
-    def draw(self, screen):
-        pass
