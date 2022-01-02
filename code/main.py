@@ -30,7 +30,6 @@ while 1:
     if key[pygame.K_s]:
         cam_y -= shift
     screen.fill('grey')
-    # map_static.render(screen)
     map_static.update(cam_x, cam_y)
     map_static.render(screen)
     map.run()
