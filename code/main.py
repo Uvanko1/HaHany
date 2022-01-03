@@ -10,8 +10,8 @@ res = [screen_width // 1.5, screen_height // 1.5]
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
 screen = pygame.transform.scale(window, res)
+map = Map(mangolia_1)
 clock = pygame.time.Clock()
-map = Map(mangolia_1, screen)
 map_static = MapStatic()
 shift = 10
 frame = 0
@@ -51,7 +51,7 @@ while 1:
     screen.fill('grey')
     map_sprite.update(cam_x, cam_y)
     map_sprite.draw(screen)
-    map.run()
+    map.run(screen)
     pygame.display.update()
     window.blit(pygame.transform.scale(screen, size), (0, 0))
     clock.tick(60)

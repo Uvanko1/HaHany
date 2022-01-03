@@ -21,12 +21,11 @@ def create_tile_group(layout, type):
 
 
 class Map:
-    def __init__(self, map_data, surface):
-        self.display_surface = surface
+    def __init__(self, map_data):
         self.world_shift = 0
         test_layout = import_csv_layout(map_data['лошади'])
         self.test_sprites = create_tile_group(test_layout, 'лошади')
 
-    def run(self):
-        self.test_sprites.draw(self.display_surface)
+    def run(self, surface):
+        self.test_sprites.draw(surface)
         self.test_sprites.update(self.world_shift)
