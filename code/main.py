@@ -1,5 +1,3 @@
-import sys
-
 import pygame
 from settings import *
 from generate_map import MapStatic, map_sprite
@@ -17,6 +15,8 @@ map = Map(mangolia_1, screen)
 map_static = MapStatic()
 shift = 10
 frame = 0
+map_zoom = 1
+zoom_count = 0
 
 while 1:
     key = pygame.key.get_pressed()
@@ -25,6 +25,21 @@ while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
+            res = [res[0] - map_zoom, res[1] - map_zoom]
+            screen = pygame.transform.scale(window, res)
+    if key[pygame.K_1]:
+        if zoom_count < 100:
+            zoom_count += 1
+            print(zoom_count)
+            res = [res[0] - map_zoom, res[1] - map_zoom]
+            screen = pygame.transform.scale(window, res)
+    if key[pygame.K_2]:
+        if zoom_count > 0:
+            zoom_count -= 1
+            print(zoom_count)
+            res = [res[0] + map_zoom, res[1] + map_zoom]
+            screen = pygame.transform.scale(window, res)
     if key[pygame.K_a]:
         cam_x += shift
     if key[pygame.K_d]:

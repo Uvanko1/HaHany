@@ -23,13 +23,9 @@ class MapStatic(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__(map_sprite)
-        self.image = pygame.image.load('../maps/map_data/mongolian.png')
         self.image = MapStatic.image
         self.rect = self.image.get_rect()
 
     def update(self, cam_x, cam_y):
         self.rect.x += cam_x
-        chunk_x = self.rect.x // screen_width
         self.rect.y += cam_y
-        chunk_y = self.rect.y // screen_height
-        print(chunk_x, chunk_y)
