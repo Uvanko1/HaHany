@@ -1,6 +1,5 @@
 import pygame
 from settings import *
-from generate_map import MapStatic, map_sprite
 from map import Map
 from game_data import mangolia_1
 
@@ -10,9 +9,8 @@ res = [screen_width // 1.5, screen_height // 1.5]
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
 screen = pygame.transform.scale(window, res)
-map = Map(mangolia_1)
+generate_map = Map(mangolia_1)
 clock = pygame.time.Clock()
-map_static = MapStatic()
 shift = 10
 frame = 0
 map_zoom = 1
@@ -49,9 +47,7 @@ while 1:
     if key[pygame.K_s]:
         cam_y -= shift
     screen.fill('grey')
-    map_sprite.update(cam_x, cam_y)
-    map_sprite.draw(screen)
-    map.run(screen)
+    generate_map.run(screen, cam_x, cam_y)
     pygame.display.update()
     window.blit(pygame.transform.scale(screen, size), (0, 0))
     clock.tick(60)
