@@ -1,56 +1,67 @@
 import pygame
+import pygame_menu
+
 from settings import *
 from map import Map
 from game_data import mangolia_1
 
-size = [screen_width, screen_height]
-res = [screen_width // 1.5, screen_height // 1.5]
-
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
-screen = pygame.transform.scale(window, res)
-generate_map = Map(mangolia_1)
-clock = pygame.time.Clock()
-shift = 10
-frame = 0
-map_zoom = 1
-zoom_count = 0
+menu = pygame_menu.Menu('Татаро-монголы', screen_width, screen_height, theme=pygame_menu.themes.THEME_GREEN)
+menu.add.image('../graphics/menu/menu.png')
 
-while 1:
-    key = pygame.key.get_pressed()
-    cam_x = 0
-    cam_y = 0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
-            res = [res[0] - map_zoom, res[1] - map_zoom]
-            screen = pygame.transform.scale(window, res)
-    if key[pygame.K_1]:
-        if zoom_count < 100:
-            zoom_count += 1
-            print(zoom_count)
-            res = [res[0] - map_zoom, res[1] - map_zoom]
-            screen = pygame.transform.scale(window, res)
-    if key[pygame.K_2]:
-        if zoom_count > 0:
-            zoom_count -= 1
-            print(zoom_count)
-            res = [res[0] + map_zoom, res[1] + map_zoom]
-            screen = pygame.transform.scale(window, res)
-    if key[pygame.K_a]:
-        cam_x += shift
-    if key[pygame.K_d]:
-        cam_x -= shift
-    if key[pygame.K_w]:
-        cam_y += shift
-    if key[pygame.K_s]:
-        cam_y -= shift
-    screen.fill('grey')
-    generate_map.run(screen, cam_x, cam_y)
-    pygame.display.update()
-    window.blit(pygame.transform.scale(screen, size), (0, 0))
-    clock.tick(60)
-    frame += 1
-    if frame % 100 == 0:
-        pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
+
+def start_the_game():
+    menu.close()
+    generate_map = Map(mangolia_1)
+    size = [screen_width, screen_height]
+    res = [screen_width // 1.5, screen_height // 1.5]
+    screen = pygame.transform.scale(window, res)
+    clock = pygame.time.Clock()
+    shift = 10
+    frame = 0
+    map_zoom = 1
+    zoom_count = 0
+    while 1:
+        menu.close()
+        key = pygame.key.get_pressed()
+        cam_x = 0
+        cam_y = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
+                res = [res[0] - map_zoom, res[1] - map_zoom]
+                screen = pygame.transform.scale(window, res)
+        if key[pygame.K_1]:
+            if zoom_count < 100:
+                zoom_count += 1
+                print(zoom_count)
+                res = [res[0] - map_zoom, res[1] - map_zoom]
+                screen = pygame.transform.scale(window, res)
+        if key[pygame.K_2]:
+            if zoom_count > 0:
+                zoom_count -= 1
+                print(zoom_count)
+                res = [res[0] + map_zoom, res[1] + map_zoom]
+                screen = pygame.transform.scale(window, res)
+        if key[pygame.K_a]:
+            cam_x += shift
+        if key[pygame.K_d]:
+            cam_x -= shift
+        if key[pygame.K_w]:
+            cam_y += shift
+        if key[pygame.K_s]:
+            cam_y -= shift
+        screen.fill('grey')
+        generate_map.run(screen, cam_x, cam_y)
+        pygame.display.update()
+        window.blit(pygame.transform.scale(screen, size), (0, 0))
+        clock.tick(480)
+        frame += 1
+        if frame % 100 == 0:
+            pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
+
+
+menu.add.button('Играть', start_the_game)
+menu.mainloop(window)

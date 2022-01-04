@@ -18,7 +18,8 @@ class HorseTile(Tile):
         self.image = surface
 
     def update(self, cam_x, cam_y):
-        print(cam_x, cam_y)
+        # print(cam_x, cam_y)
+        pass
 
 
 class ForestTile(Tile):
