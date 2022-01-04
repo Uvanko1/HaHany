@@ -1,6 +1,17 @@
 import pygame
 from csv import reader
 from settings import *
+from os import walk
+
+
+def import_folder(path):
+    surface_list = []
+    for _, _, image_files in walk(path):
+        for image in image_files:
+            full_path = path + '/' + image
+            image_surf = pygame.image.load(full_path).convert_alpha()
+            surface_list.append(image_surf)
+    return surface_list
 
 
 def import_csv_layout(path):
@@ -14,8 +25,8 @@ def import_csv_layout(path):
 
 def import_cut_graphic(path):
     surface = pygame.image.load(path).convert_alpha()
-    tile_num_x = int(surface.get_size()[0] / tile_size) - 1
-    tile_num_y = int(surface.get_size()[1] / tile_size) - 1
+    tile_num_x = int(surface.get_size()[0] / tile_size)
+    tile_num_y = int(surface.get_size()[1] / tile_size)
     cut_tiles = []
     for row in range(tile_num_y):
         for col in range(tile_num_x):
