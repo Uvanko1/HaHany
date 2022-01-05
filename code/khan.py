@@ -1,0 +1,33 @@
+import pygame
+from support import import_folder
+from settings import screen_width, screen_height
+
+khan_sprite = pygame.sprite.Group()
+
+
+class Khan(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__(khan_sprite)
+        self.frames_right = import_folder('../graphics/khan/horse_right')
+        self.frames_left = import_folder('../graphics/khan/horse_left')
+        self.frames_top = import_folder('../graphics/khan/horse_top')
+        self.frames_bottom = import_folder('../graphics/khan/horse_bottom')
+        self.frames_index = 0
+        self.image = self.frames_top[self.frames_index]
+        self.rect = self.image.get_rect(topleft=((screen_width // 1.5) // 2, (screen_height // 1.5) // 2))
+
+    def update(self, side):
+        self.animation(side)
+
+    def animation(self, side):
+        self.frames_index += 0.15
+        if self.frames_index >= 4:
+            self.frames_index = 0
+        if side == 'right':
+            self.image = self.frames_right[int(self.frames_index)]
+        if side == 'left':
+            self.image = self.frames_left[int(self.frames_index)]
+        if side == 'top':
+            self.image = self.frames_top[int(self.frames_index)]
+        if side == 'bottom':
+            self.image = self.frames_bottom[int(self.frames_index)]

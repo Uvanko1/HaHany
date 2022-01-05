@@ -1,11 +1,13 @@
 import pygame
 
 from map_static import MapSprite, map_sprite
-from support import import_csv_layout, import_cut_graphic, import_folder
+from support import import_csv_layout
 from settings import tile_size
-from tiles import Tile, HorseTile, AnimatedTile
+from tiles import AnimatedTile
+from khan import Khan, khan_sprite
 
 MapSprite()
+Khan()
 
 
 def create_tile_group(layout, type):
@@ -15,11 +17,6 @@ def create_tile_group(layout, type):
             if val != '-1':
                 x = col_index * tile_size
                 y = row_index * tile_size
-                if type == 'лошади':
-                    test_tile_list = import_cut_graphic('../graphics/лошади/horse.png')
-                    tile_surface = test_tile_list[int(val)]
-                    sprite = HorseTile(tile_size, x, y, tile_surface)
-                    sprite_group.add(sprite)
                 if type == 'animation_forest':
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/les/Tree')
                     sprite_group.add(sprite)
@@ -33,10 +30,13 @@ class Map:
         forest_layout = import_csv_layout(map_data['animation_forest'])
         self.forest_sprites = create_tile_group(forest_layout, 'animation_forest')
         self.map_sprite = map_sprite
+        self.khan_sprite = khan_sprite
 
-    def run(self, surface, cam_x, cam_y):
+    def run(self, surface, cam_x, cam_y, khan_view):
         self.map_sprite.draw(surface)
         self.map_sprite.update(cam_x, cam_y)
+        self.khan_sprite.draw(surface)
+        self.khan_sprite.update(khan_view)
         self.test_sprites.draw(surface)
         self.test_sprites.update(cam_x, cam_y)
         self.forest_sprites.update(cam_x, cam_y)

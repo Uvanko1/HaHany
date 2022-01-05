@@ -22,6 +22,7 @@ def start_the_game():
     frame = 0
     map_zoom = 1
     zoom_count = 0
+    khan_view = 'top'
     while 1:
         menu.close()
         key = pygame.key.get_pressed()
@@ -42,16 +43,21 @@ def start_the_game():
                 print(zoom_count)
                 res = [res[0] + map_zoom, res[1] + map_zoom]
                 screen = pygame.transform.scale(window, res)
+        khan_view = 'stop'
         if key[pygame.K_a]:
             cam_x += shift
+            khan_view = 'left'
         if key[pygame.K_d]:
             cam_x -= shift
+            khan_view = 'right'
         if key[pygame.K_w]:
             cam_y += shift
+            khan_view = 'bottom'
         if key[pygame.K_s]:
             cam_y -= shift
+            khan_view = 'top'
         screen.fill('grey')
-        generate_map.run(screen, cam_x, cam_y)
+        generate_map.run(screen, cam_x, cam_y, khan_view)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         clock.tick(480)
