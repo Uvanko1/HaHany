@@ -15,10 +15,10 @@ def start_the_game():
     menu.close()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
-    res = [screen_width // 1.5, screen_height // 1.5]
+    res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 10
+    shift = 2
     frame = 0
     map_zoom = 1
     zoom_count = 0
@@ -43,7 +43,7 @@ def start_the_game():
                 print(zoom_count)
                 res = [res[0] + map_zoom, res[1] + map_zoom]
                 screen = pygame.transform.scale(window, res)
-        khan_view = 'stop'
+        khan_view = 'stop' + khan_view
         if key[pygame.K_a]:
             cam_x += shift
             khan_view = 'left'
@@ -60,7 +60,7 @@ def start_the_game():
         generate_map.run(screen, cam_x, cam_y, khan_view)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
-        clock.tick(480)
+        clock.tick(60)
         frame += 1
         if frame % 100 == 0:
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))

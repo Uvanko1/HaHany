@@ -14,7 +14,7 @@ class Khan(pygame.sprite.Sprite):
         self.frames_bottom = import_folder('../graphics/khan/horse_bottom')
         self.frames_index = 0
         self.image = self.frames_top[self.frames_index]
-        self.rect = self.image.get_rect(topleft=((screen_width // 1.5) // 2, (screen_height // 1.5) // 2))
+        self.rect = self.image.get_rect(topleft=((screen_width // 2) // 2, (screen_height // 2) // 2))
 
     def update(self, side):
         self.animation(side)
@@ -25,9 +25,17 @@ class Khan(pygame.sprite.Sprite):
             self.frames_index = 0
         if side == 'right':
             self.image = self.frames_right[int(self.frames_index)]
+        if side == 'stopright':
+            self.image = self.frames_right[1]
         if side == 'left':
             self.image = self.frames_left[int(self.frames_index)]
+        if side == 'stopleft':
+            self.image = self.frames_left[2]
         if side == 'top':
             self.image = self.frames_top[int(self.frames_index)]
+        if side == 'stoptop':
+            self.image = self.frames_top[0]
         if side == 'bottom':
             self.image = self.frames_bottom[int(self.frames_index)]
+        if side == 'stopbottom':
+            self.image = self.frames_bottom[0]
