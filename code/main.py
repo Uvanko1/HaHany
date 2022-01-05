@@ -18,7 +18,7 @@ def start_the_game():
     res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 2
+    shift = 20
     frame = 0
     map_zoom = 1
     zoom_count = 0
