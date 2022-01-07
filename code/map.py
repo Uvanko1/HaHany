@@ -41,4 +41,3 @@ class Map:
         self.test_sprites.update(cam_x, cam_y)
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
-

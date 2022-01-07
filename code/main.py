@@ -4,11 +4,14 @@ import pygame_menu
 from settings import *
 from map import Map
 from game_data import mangolia_1
+from saves import save_position
+from map_static import MapSprite
 
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
 menu = pygame_menu.Menu('Татаро-монголы', screen_width, screen_height, theme=pygame_menu.themes.THEME_GREEN)
 menu.add.image('../graphics/menu/menu.png')
+map_sprite = MapSprite()
 
 
 def start_the_game():
@@ -18,7 +21,7 @@ def start_the_game():
     res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 20
+    shift = 15
     frame = 0
     map_zoom = 1
     zoom_count = 0
@@ -31,6 +34,10 @@ def start_the_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_F5:
+                    pos_x, pos_y = map_sprite.get_rect_pos()
+                    save_position(pos_x, pos_y)
         if key[pygame.K_1]:
             if zoom_count < 100:
                 zoom_count += 1
@@ -43,7 +50,7 @@ def start_the_game():
                 print(zoom_count)
                 res = [res[0] + map_zoom, res[1] + map_zoom]
                 screen = pygame.transform.scale(window, res)
-        khan_view = 'stop' + khan_view
+        khan_view = 'stop_' + khan_view
         if key[pygame.K_a]:
             cam_x += shift
             khan_view = 'left'
@@ -60,7 +67,7 @@ def start_the_game():
         generate_map.run(screen, cam_x, cam_y, khan_view)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
-        clock.tick(60)
+        clock.tick(120)
         frame += 1
         if frame % 100 == 0:
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))

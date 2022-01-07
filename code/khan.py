@@ -25,17 +25,17 @@ class Khan(pygame.sprite.Sprite):
             self.frames_index = 0
         if side == 'right':
             self.image = self.frames_right[int(self.frames_index)]
-        if side == 'stopright':
-            self.image = self.frames_right[1]
+        if side == 'stop_right':
+            self.image = self.frames_right[2]
         if side == 'left':
             self.image = self.frames_left[int(self.frames_index)]
-        if side == 'stopleft':
+        if side == 'stop_left':
             self.image = self.frames_left[2]
         if side == 'top':
             self.image = self.frames_top[int(self.frames_index)]
-        if side == 'stoptop':
-            self.image = self.frames_top[0]
+        if side == 'stop_top':
+            self.image = self.frames_top[1]
         if side == 'bottom':
             self.image = self.frames_bottom[int(self.frames_index)]
-        if side == 'stopbottom':
+        if side == 'stop_bottom':
             self.image = self.frames_bottom[0]
