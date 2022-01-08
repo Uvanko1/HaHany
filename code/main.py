@@ -57,18 +57,19 @@ def start_the_game():
                 res = [res[0] + map_zoom, res[1] + map_zoom]
                 screen = pygame.transform.scale(window, res)
         khan_view = 'stop_' + khan_view
-        if key[pygame.K_a]:
-            cam_x += shift
-            khan_view = 'left'
-        if key[pygame.K_d]:
-            cam_x -= shift
-            khan_view = 'right'
-        if key[pygame.K_w]:
-            cam_y += shift
-            khan_view = 'bottom'
-        if key[pygame.K_s]:
-            cam_y -= shift
-            khan_view = 'top'
+        if not flag:
+            if key[pygame.K_a]:
+                cam_x += shift
+                khan_view = 'left'
+            if key[pygame.K_d]:
+                cam_x -= shift
+                khan_view = 'right'
+            if key[pygame.K_w]:
+                cam_y += shift
+                khan_view = 'bottom'
+            if key[pygame.K_s]:
+                cam_y -= shift
+                khan_view = 'top'
         screen.fill('grey')
         generate_map.run(screen, cam_x, cam_y, khan_view, flag)
         pygame.display.update()

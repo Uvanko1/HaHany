@@ -1,5 +1,6 @@
 import pygame
 
+from stats import Stats, stats_sprite
 from dialog import ramka_sprite, Dialog
 from map_static import MapSprite, map_sprite
 from support import import_csv_layout
@@ -9,6 +10,7 @@ from khan import Khan, khan_sprite
 
 Khan()
 dialog = Dialog()
+stats = Stats()
 
 
 def create_tile_group(layout, type):
@@ -33,6 +35,7 @@ class Map:
         self.map_sprite = map_sprite
         self.khan_sprite = khan_sprite
         self.ramka_sprite = ramka_sprite
+        self.stats_sprite = stats_sprite
 
     def run(self, surface, cam_x, cam_y, khan_view, flag):
         self.map_sprite.draw(surface)
@@ -43,6 +46,10 @@ class Map:
         self.test_sprites.update(cam_x, cam_y)
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
+        stats.draw_stats_text(surface, 0, 4, '4/20')
+        stats.draw_stats_text(surface, 60, 4, '5/20')
+        stats.draw_stats_text(surface, 120, 4, '20/20')
+        self.stats_sprite.draw(surface)
         if flag:
             self.ramka_sprite.draw(surface)
             dialog.draw_text(surface)
