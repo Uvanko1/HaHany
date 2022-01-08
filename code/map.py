@@ -1,5 +1,6 @@
 import pygame
 
+from dialog import ramka_sprite, Dialog
 from map_static import MapSprite, map_sprite
 from support import import_csv_layout
 from settings import tile_size
@@ -7,6 +8,7 @@ from tiles import AnimatedTile
 from khan import Khan, khan_sprite
 
 Khan()
+dialog = Dialog()
 
 
 def create_tile_group(layout, type):
@@ -30,8 +32,9 @@ class Map:
         self.forest_sprites = create_tile_group(forest_layout, 'animation_forest')
         self.map_sprite = map_sprite
         self.khan_sprite = khan_sprite
+        self.ramka_sprite = ramka_sprite
 
-    def run(self, surface, cam_x, cam_y, khan_view):
+    def run(self, surface, cam_x, cam_y, khan_view, flag):
         self.map_sprite.draw(surface)
         self.map_sprite.update(cam_x, cam_y)
         self.khan_sprite.draw(surface)
@@ -40,3 +43,6 @@ class Map:
         self.test_sprites.update(cam_x, cam_y)
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
+        if flag:
+            self.ramka_sprite.draw(surface)
+            dialog.draw_text(surface)
