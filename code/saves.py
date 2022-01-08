@@ -19,6 +19,7 @@ def get_save_position():
     if not data:
         cur.execute('''INSERT INTO spawn (SpawnX, SpawnY)
                                                         VALUES (?, ?)''', [spawn_pos_x, spawn_pos_y])
+        con.commit()
 
     data = cur.execute('''SELECT SpawnX, SpawnY FROM spawn''').fetchall()
     print(data[-1][0], data[-1][1])
@@ -28,4 +29,5 @@ def get_save_position():
 def save_position(x, y):
     cur.execute('''INSERT INTO spawn (SpawnX, SpawnY)
                             VALUES (?, ?);''', [x, y])
+    con.commit()
     print(cur.execute('''SELECT SpawnX, SpawnY FROM spawn''').fetchall())

@@ -12,8 +12,8 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((size, size))
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.rect.x -= lst[0]
-        self.rect.y -= lst[1]
+        self.rect.x += lst[0]
+        self.rect.y += lst[1]
 
 
 class StaticTile(Tile):

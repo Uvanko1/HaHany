@@ -13,8 +13,8 @@ class MapSprite(pygame.sprite.Sprite):
         super().__init__(map_sprite)
         self.image = MapSprite.image
         self.rect = self.image.get_rect()
-        self.rect.x = -lst_spawn_pos[0]
-        self.rect.y = -lst_spawn_pos[1]
+        self.rect.x = lst_spawn_pos[0]
+        self.rect.y = lst_spawn_pos[1]
 
     def update(self, cam_x, cam_y):
         if self.rect.x + cam_x <= 0 and -(self.rect.x + cam_x) <= self.rect.width - screen_width:

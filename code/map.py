@@ -6,7 +6,6 @@ from settings import tile_size
 from tiles import AnimatedTile
 from khan import Khan, khan_sprite
 
-MapSprite()
 Khan()
 
 
