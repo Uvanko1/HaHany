@@ -21,16 +21,21 @@ class StaticTile(Tile):
         super().__init__(size, x, y)
         self.image = surface
 
+    def update(self, cam_x, cam_y):
+        self.rect.x += cam_x
+        self.rect.y += cam_y
+
 
 class AnimatedTile(Tile):
-    def __init__(self, size, x, y, path):
+    def __init__(self, size, x, y, path, speed):
         super().__init__(size, x, y)
         self.frames = import_folder(path)
+        self.speed = speed
         self.frames_index = 0
         self.image = self.frames[self.frames_index]
 
     def animate(self):
-        self.frames_index += 0.15
+        self.frames_index += self.speed
         if self.frames_index >= len(self.frames):
             self.frames_index = 0
         self.image = self.frames[int(self.frames_index)]
@@ -39,3 +44,7 @@ class AnimatedTile(Tile):
         self.animate()
         self.rect.x += cam_x
         self.rect.y += cam_y
+
+
+
+

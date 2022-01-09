@@ -1,7 +1,6 @@
 import pygame
 import pygame_menu
 
-from dialog import Dialog
 from settings import *
 from map import Map
 from game_data import mangolia_1
@@ -24,10 +23,10 @@ def start_the_game():
     clock = pygame.time.Clock()
     shift = 15
     frame = 0
-    map_zoom = 1
+    map_zoom = 5
     zoom_count = 0
     khan_view = 'top'
-    flag = False
+    flag_dialog = False
     while 1:
         menu.close()
         key = pygame.key.get_pressed()
@@ -41,23 +40,22 @@ def start_the_game():
                     pos_x, pos_y = map_sprite.get_rect_pos()
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
-                    flag = True
+                    flag_dialog = True
                 elif event.key == pygame.K_ESCAPE:
-                    flag = False
-        if key[pygame.K_1]:
-            if zoom_count < 100:
-                zoom_count += 1
-                print(zoom_count)
-                res = [res[0] - map_zoom, res[1] - map_zoom]
-                screen = pygame.transform.scale(window, res)
-        if key[pygame.K_2]:
-            if zoom_count > 0:
-                zoom_count -= 1
-                print(zoom_count)
-                res = [res[0] + map_zoom, res[1] + map_zoom]
-                screen = pygame.transform.scale(window, res)
+                    flag_dialog = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
+                if zoom_count < 20:
+                    zoom_count += 1
+                    res = [res[0] - map_zoom, res[1] - map_zoom]
+                    screen = pygame.transform.scale(window, res)
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
+                if zoom_count > 0:
+                    zoom_count -= 1
+                    res = [res[0] + map_zoom, res[1] + map_zoom]
+                    screen = pygame.transform.scale(window, res)
+
         khan_view = 'stop_' + khan_view
-        if not flag:
+        if not flag_dialog:
             if key[pygame.K_a]:
                 cam_x += shift
                 khan_view = 'left'
@@ -71,7 +69,7 @@ def start_the_game():
                 cam_y -= shift
                 khan_view = 'top'
         screen.fill('grey')
-        generate_map.run(screen, cam_x, cam_y, khan_view, flag)
+        generate_map.run(screen, cam_x, cam_y, khan_view, flag_dialog)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         clock.tick(120)

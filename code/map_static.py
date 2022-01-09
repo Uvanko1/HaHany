@@ -15,10 +15,13 @@ class MapSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = lst_spawn_pos[0]
         self.rect.y = lst_spawn_pos[1]
+        self.map_end_flag = False
 
     def update(self, cam_x, cam_y):
         if self.rect.x + cam_x <= 0 and -(self.rect.x + cam_x) <= self.rect.width - screen_width:
             self.rect.x += cam_x
+        else:
+            self.map_end_flag = True
         if self.rect.y + cam_y <= 0 and -(self.rect.y + cam_y) <= self.rect.height - screen_height:
             self.rect.y += cam_y
 

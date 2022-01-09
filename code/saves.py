@@ -1,5 +1,9 @@
 import sqlite3
+import os
 
+# создаем папку для базы данных
+if not os.path.isdir("../saves"):
+    os.mkdir("../saves")
 # создаем базу данных
 con = sqlite3.connect('../saves/save_data.db')
 cur = con.cursor()
