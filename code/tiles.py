@@ -2,9 +2,10 @@ import pygame
 
 from support import import_folder
 from saves import get_save_position
+from khan import Khan
 
 lst = get_save_position()
-print(lst)
+khan = Khan()
 
 
 class Tile(pygame.sprite.Sprite):
@@ -22,6 +23,8 @@ class StaticTile(Tile):
         self.image = surface
 
     def update(self, cam_x, cam_y):
+        if not pygame.sprite.collide_mask(self, khan):
+            stop()
         self.rect.x += cam_x
         self.rect.y += cam_y
 
@@ -36,6 +39,9 @@ class AnimatedTile(Tile):
 
     def animate(self):
         self.frames_index += self.speed
+        if pygame.sprite.collide_mask(self, khan):
+            stop()
+            self.rect = self.rect.move(0, 1)
         if self.frames_index >= len(self.frames):
             self.frames_index = 0
         self.image = self.frames[int(self.frames_index)]
@@ -46,5 +52,5 @@ class AnimatedTile(Tile):
         self.rect.y += cam_y
 
 
-
-
+def stop():
+    print('ok')
