@@ -2,10 +2,14 @@ import pygame
 
 from support import import_folder
 from saves import get_save_position
+from map_static import MapSprite
 from khan import Khan
+map_static = MapSprite()
 
 lst = get_save_position()
 khan = Khan()
+
+stop_flag = None
 
 
 class Tile(pygame.sprite.Sprite):
@@ -23,8 +27,6 @@ class StaticTile(Tile):
         self.image = surface
 
     def update(self, cam_x, cam_y):
-        if not pygame.sprite.collide_mask(self, khan):
-            stop()
         self.rect.x += cam_x
         self.rect.y += cam_y
 
@@ -36,21 +38,18 @@ class AnimatedTile(Tile):
         self.speed = speed
         self.frames_index = 0
         self.image = self.frames[self.frames_index]
+        self.stop_flag = None
 
     def animate(self):
         self.frames_index += self.speed
-        if pygame.sprite.collide_mask(self, khan):
-            stop()
-            self.rect = self.rect.move(0, 1)
         if self.frames_index >= len(self.frames):
             self.frames_index = 0
         self.image = self.frames[int(self.frames_index)]
 
     def update(self, cam_x, cam_y):
         self.animate()
+        if pygame.sprite.collide_mask(self, khan):
+            print("mask")
         self.rect.x += cam_x
         self.rect.y += cam_y
 
-
-def stop():
-    print('ok')

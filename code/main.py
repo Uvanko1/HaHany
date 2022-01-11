@@ -21,7 +21,7 @@ def start_the_game():
     res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 15
+    shift = 1
     frame = 0
     map_zoom = 5
     zoom_count = 0
@@ -43,6 +43,7 @@ def start_the_game():
                     flag_dialog = True
                 elif event.key == pygame.K_ESCAPE:
                     flag_dialog = False
+            # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 20:
                     zoom_count += 1

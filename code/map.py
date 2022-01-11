@@ -2,7 +2,7 @@ import pygame
 
 from stats import Stats, stats_sprite
 from dialog import ramka_sprite, Dialog
-from map_static import MapSprite, map_sprite
+from map_static import map_sprite
 from support import import_csv_layout
 from settings import tile_size
 from tiles import AnimatedTile
@@ -24,16 +24,16 @@ def create_tile_group(layout, type):
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/forest/Tree', 0.15)
                     sprite_group.add(sprite)
                 if type == 'animation_water_left_bottom':
-                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Bottom_Left', 0.05)
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Bottom_Left', 0.18)
                     sprite_group.add(sprite)
                 if type == 'animation_water_right_bottom':
-                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Bottom_Left — miror', 0.05)
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Bottom_Left — miror', 0.18)
                     sprite_group.add(sprite)
                 if type == 'animation_water_left_up':
-                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left', 0.05)
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left', 0.18)
                     sprite_group.add(sprite)
                 if type == 'animation_water_right_up':
-                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left — miror', 0.05)
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left — miror', 0.18)
                     sprite_group.add(sprite)
 
     return sprite_group
@@ -60,21 +60,21 @@ class Map:
 
     def run(self, surface, cam_x, cam_y, khan_view, dialog_flag):
         self.map_sprite.draw(surface)
-        self.map_sprite.update(cam_x, cam_y)
-        self.khan_sprite.draw(surface)
-        self.khan_sprite.update(khan_view)
         self.horse_sprites.draw(surface)
         self.horse_sprites.update(cam_x, cam_y)
+        self.anim_water_sprites_1.update(cam_x, cam_y)
+        self.anim_water_sprites_2.update(cam_x, cam_y)
+        self.anim_water_sprites_3.update(cam_x, cam_y)
+        self.anim_water_sprites_4.update(cam_x, cam_y)
+        self.anim_water_sprites_1.draw(surface)
+        self.anim_water_sprites_2.draw(surface)
+        self.anim_water_sprites_3.draw(surface)
+        self.anim_water_sprites_4.draw(surface)
+        self.khan_sprite.draw(surface)
+        self.khan_sprite.update(khan_view)
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
-        self.anim_water_sprites_1.update(cam_x, cam_y)
-        self.anim_water_sprites_1.draw(surface)
-        self.anim_water_sprites_2.update(cam_x, cam_y)
-        self.anim_water_sprites_2.draw(surface)
-        self.anim_water_sprites_3.update(cam_x, cam_y)
-        self.anim_water_sprites_3.draw(surface)
-        self.anim_water_sprites_4.update(cam_x, cam_y)
-        self.anim_water_sprites_4.draw(surface)
+        self.map_sprite.update(cam_x, cam_y)
         stats.draw_stats_text(surface, 0, 4, '4/20')
         stats.draw_stats_text(surface, 60, 4, '5/20')
         stats.draw_stats_text(surface, 120, 4, '20/20')
