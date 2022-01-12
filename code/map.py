@@ -41,18 +41,28 @@ def create_tile_group(layout, type):
 
 class Map:
     def __init__(self, map_data):
+        # импортирование положения и спрайтов лошадей
         test_layout = import_csv_layout(map_data['лошади'])
         self.horse_sprites = create_tile_group(test_layout, 'лошади')
+
+        # импортирование положения и спрайтов дервьев
         forest_layout = import_csv_layout(map_data['animation_forest'])
         self.forest_sprites = create_tile_group(forest_layout, 'animation_forest')
+
+        # импортирование положения и спрайтов кусков озера
         anim_water_layout_1 = import_csv_layout(map_data['animation_water_left_bottom'])
-        anim_water_layout_2 = import_csv_layout(map_data['animation_water_right_bottom'])
-        anim_water_layout_3 = import_csv_layout(map_data['animation_water_left_up'])
-        anim_water_layout_4 = import_csv_layout(map_data['animation_water_right_up'])
         self.anim_water_sprites_1 = create_tile_group(anim_water_layout_1, 'animation_water_left_bottom')
+        anim_water_layout_2 = import_csv_layout(map_data['animation_water_right_bottom'])
         self.anim_water_sprites_2 = create_tile_group(anim_water_layout_2, 'animation_water_right_bottom')
+        anim_water_layout_3 = import_csv_layout(map_data['animation_water_left_up'])
         self.anim_water_sprites_3 = create_tile_group(anim_water_layout_3, 'animation_water_left_up')
+        anim_water_layout_4 = import_csv_layout(map_data['animation_water_right_up'])
         self.anim_water_sprites_4 = create_tile_group(anim_water_layout_4, 'animation_water_right_up')
+
+        # импортирование положения и спрайтов жителей
+        npc_layout = import_csv_layout(map_data['people'])
+        self.npc_sprites = create_tile_group(npc_layout, map_data['people'])
+
         self.map_sprite = map_sprite
         self.khan_sprite = khan_sprite
         self.ramka_sprite = ramka_sprite
