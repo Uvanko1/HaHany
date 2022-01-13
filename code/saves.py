@@ -18,8 +18,8 @@ def get_save_position():
            SpawnY INTEGER NOT NULL);""")
 
     data = cur.execute('''SELECT SpawnX, SpawnY FROM spawn''').fetchall()
-    spawn_pos_x = -11130
-    spawn_pos_y = -2220
+    spawn_pos_x = -9600
+    spawn_pos_y = -9600
     if not data:
         cur.execute('''INSERT INTO spawn (SpawnX, SpawnY)
                                                         VALUES (?, ?)''', [spawn_pos_x, spawn_pos_y])

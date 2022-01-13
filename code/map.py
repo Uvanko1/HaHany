@@ -36,7 +36,7 @@ def create_tile_group(layout, type):
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left — miror', 0.18)
                     sprite_group.add(sprite)
                 if type == 'people':
-                    sprite = CharacterTile(tile_size, x, y, '../graphics/npc/character', 0.12)
+                    sprite = CharacterTile(tile_size, x, y, '../graphics/npc', 0.12)
                     sprite_group.add(sprite)
                     print(sprite)
 
