@@ -40,3 +40,4 @@ class Khan(pygame.sprite.Sprite):
             self.image = self.frames_bottom[int(self.frames_index)]
         if side == 'stop_bottom':
             self.image = self.frames_bottom[0]
+

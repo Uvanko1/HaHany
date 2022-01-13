@@ -3,7 +3,7 @@ import pygame_menu
 
 from settings import *
 from map import Map
-from game_data import mangolia_1
+from game_data import mangolia_1, get_dialog
 from saves import save_position
 from map_static import MapSprite
 
@@ -23,9 +23,10 @@ def start_the_game():
     clock = pygame.time.Clock()
     shift = 15
     frame = 0
-    map_zoom = 1
+    map_zoom = 5
     zoom_count = 0
     khan_view = 'top'
+    dialog_pos = None
     flag_dialog = False
     while 1:
         menu.close()
@@ -40,7 +41,9 @@ def start_the_game():
                     pos_x, pos_y = map_sprite.get_rect_pos()
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
-                    flag_dialog = True
+                    dialog_pos = get_dialog(map_sprite.get_rect_pos())
+                    if dialog_pos is not None:
+                        flag_dialog = True
                 elif event.key == pygame.K_ESCAPE:
                     flag_dialog = False
             # увеличение изображения
@@ -56,17 +59,6 @@ def start_the_game():
                     screen = pygame.transform.scale(window, res)
 
         khan_view = 'stop_' + khan_view
-        if key[pygame.K_1]:
-            if zoom_count < 100:
-                zoom_count += 1
-                res = [res[0] - map_zoom, res[1] - map_zoom]
-                screen = pygame.transform.scale(window, res)
-        if key[pygame.K_2]:
-            if zoom_count > 0:
-                zoom_count -= 1
-                res = [res[0] + map_zoom, res[1] + map_zoom]
-                screen = pygame.transform.scale(window, res)
-
         if not flag_dialog:
             if key[pygame.K_a]:
                 cam_x += shift
@@ -81,10 +73,10 @@ def start_the_game():
                 cam_y -= shift
                 khan_view = 'top'
         screen.fill('grey')
-        generate_map.run(screen, cam_x, cam_y, khan_view, flag_dialog)
+        generate_map.run(screen, cam_x, cam_y, khan_view, flag_dialog, dialog_pos)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
-        clock.tick(120)
+        clock.tick(60)
         frame += 1
         if frame % 100 == 0:
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))

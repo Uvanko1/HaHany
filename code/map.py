@@ -72,10 +72,12 @@ class Map:
         self.ramka_sprite = ramka_sprite
         self.stats_sprite = stats_sprite
 
-    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag):
+    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, dialog_pos):
         self.map_sprite.draw(surface)
+
         self.horse_sprites.draw(surface)
         self.horse_sprites.update(cam_x, cam_y)
+
         self.anim_water_sprites_1.update(cam_x, cam_y)
         self.anim_water_sprites_2.update(cam_x, cam_y)
         self.anim_water_sprites_3.update(cam_x, cam_y)
@@ -84,17 +86,23 @@ class Map:
         self.anim_water_sprites_2.draw(surface)
         self.anim_water_sprites_3.draw(surface)
         self.anim_water_sprites_4.draw(surface)
+
         self.khan_sprite.draw(surface)
         self.khan_sprite.update(khan_view)
+
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
+
         self.npc_sprites.update(cam_x, cam_y)
         self.npc_sprites.draw(surface)
+
         self.map_sprite.update(cam_x, cam_y)
+
         stats.draw_stats_text(surface, 0, 4, '4/20')
         stats.draw_stats_text(surface, 60, 4, '5/20')
         stats.draw_stats_text(surface, 120, 4, '20/20')
         self.stats_sprite.draw(surface)
         if dialog_flag:
+            dialog.draw_text(surface, dialog_pos)
             self.ramka_sprite.draw(surface)
-            dialog.draw_text(surface)
+

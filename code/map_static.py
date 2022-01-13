@@ -27,4 +27,3 @@ class MapSprite(pygame.sprite.Sprite):
 
     def get_rect_pos(self):
         return self.rect.x, self.rect.y
-

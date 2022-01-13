@@ -7,7 +7,7 @@ from khan import Khan
 
 map_static = MapSprite()
 
-lst = get_save_position()
+list_spawn_pos = get_save_position()
 khan = Khan()
 
 stop_flag = None
@@ -18,8 +18,8 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((size, size))
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.rect.x += lst[0]
-        self.rect.y += lst[1]
+        self.rect.x += list_spawn_pos[0]
+        self.rect.y += list_spawn_pos[1]
 
 
 class StaticTile(Tile):
@@ -49,10 +49,12 @@ class AnimatedTile(Tile):
 
     def update(self, cam_x, cam_y):
         self.animate()
-        if pygame.sprite.collide_mask(self, khan):
-            print("mask")
         self.rect.x += cam_x
         self.rect.y += cam_y
+
+    def get_mask(self):
+        if pygame.sprite.collide_mask(self, khan):
+            print("mask")
 
 
 class CharacterTile(Tile):
@@ -76,3 +78,4 @@ class CharacterTile(Tile):
             print("mask")
         self.rect.x += cam_x
         self.rect.y += cam_y
+
