@@ -1,5 +1,6 @@
 import pygame
 
+from hints import Hints, icons_sprite
 from stats import Stats, stats_sprite
 from dialog import ramka_sprite, Dialog
 from map_static import map_sprite
@@ -10,6 +11,7 @@ from khan import Khan, khan_sprite
 
 Khan()
 dialog = Dialog()
+Hints()
 stats = Stats()
 
 
@@ -71,8 +73,10 @@ class Map:
         self.khan_sprite = khan_sprite
         self.ramka_sprite = ramka_sprite
         self.stats_sprite = stats_sprite
+        self.icons_sprite = icons_sprite
 
-    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, dialog_pos):
+    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, dialog_pos, icon_flag):
+        print(icon_flag)
         self.map_sprite.draw(surface)
 
         self.horse_sprites.draw(surface)
@@ -102,6 +106,8 @@ class Map:
         stats.draw_stats_text(surface, 60, 4, '5/20')
         stats.draw_stats_text(surface, 120, 4, '20/20')
         self.stats_sprite.draw(surface)
+        if icon_flag:
+            self.icons_sprite.draw(surface)
         if dialog_flag:
             dialog.draw_text(surface, dialog_pos)
             self.ramka_sprite.draw(surface)

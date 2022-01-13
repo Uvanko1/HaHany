@@ -15,6 +15,7 @@ map_sprite = MapSprite()
 
 
 def start_the_game():
+    icon_flag = False
     menu.close()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
@@ -28,11 +29,14 @@ def start_the_game():
     khan_view = 'top'
     dialog_pos = None
     flag_dialog = False
+    flag_hint = False
     while 1:
         menu.close()
         key = pygame.key.get_pressed()
         cam_x = 0
         cam_y = 0
+        if get_dialog(map_sprite.get_rect_pos()) is not None:
+            flag_hint = True
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -73,7 +77,7 @@ def start_the_game():
                 cam_y -= shift
                 khan_view = 'top'
         screen.fill('grey')
-        generate_map.run(screen, cam_x, cam_y, khan_view, flag_dialog, dialog_pos)
+        generate_map.run(screen, cam_x, cam_y, khan_view, flag_dialog, dialog_pos, flag_hint)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         clock.tick(60)

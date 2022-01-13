@@ -9,11 +9,11 @@ mangolia_1 = {
 }
 
 dialogs_pos = [[-9060, -9450]]
-dialogs = {0: 'Дорова епта мир!'}
+dialogs = {0: 'Дорова мир!'}
 
 
 def get_dialog(pos):
     for p in range(len(dialogs_pos)):
-        if dialogs_pos[p][0] - 100 <= pos[0] <= dialogs_pos[p][0] + 100 \
-                and dialogs_pos[p][1] - 100 <= pos[1] <= dialogs_pos[p][1] + 100:
+        if dialogs_pos[p][0] - 20 <= pos[0] <= dialogs_pos[p][0] + 20 \
+                and dialogs_pos[p][1] - 20 <= pos[1] <= dialogs_pos[p][1] + 20:
             return p
