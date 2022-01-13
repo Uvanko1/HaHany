@@ -75,4 +75,5 @@ class CharacterTile(Tile):
         if pygame.sprite.collide_mask(self, khan):
             print("mask")
         self.rect.x += cam_x
+        print('ok')
         self.rect.y += cam_y

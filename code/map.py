@@ -5,7 +5,7 @@ from dialog import ramka_sprite, Dialog
 from map_static import map_sprite
 from support import import_csv_layout
 from settings import tile_size
-from tiles import AnimatedTile
+from tiles import AnimatedTile, CharacterTile
 from khan import Khan, khan_sprite
 
 Khan()
@@ -35,6 +35,10 @@ def create_tile_group(layout, type):
                 if type == 'animation_water_right_up':
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/anim water/River_Top_Left — miror', 0.18)
                     sprite_group.add(sprite)
+                if type == 'people':
+                    sprite = CharacterTile(tile_size, x, y, '../graphics/npc/character', 0.12)
+                    sprite_group.add(sprite)
+                    print(sprite)
 
     return sprite_group
 
@@ -61,7 +65,7 @@ class Map:
 
         # импортирование положения и спрайтов жителей
         npc_layout = import_csv_layout(map_data['people'])
-        self.npc_sprites = create_tile_group(npc_layout, map_data['people'])
+        self.npc_sprites = create_tile_group(npc_layout, 'people')
 
         self.map_sprite = map_sprite
         self.khan_sprite = khan_sprite
@@ -84,6 +88,8 @@ class Map:
         self.khan_sprite.update(khan_view)
         self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
+        self.npc_sprites.update(cam_x, cam_y)
+        self.npc_sprites.draw(surface)
         self.map_sprite.update(cam_x, cam_y)
         stats.draw_stats_text(surface, 0, 4, '4/20')
         stats.draw_stats_text(surface, 60, 4, '5/20')

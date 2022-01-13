@@ -21,9 +21,9 @@ def start_the_game():
     res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 1
+    shift = 15
     frame = 0
-    map_zoom = 5
+    map_zoom = 1
     zoom_count = 0
     khan_view = 'top'
     flag_dialog = False
@@ -56,6 +56,17 @@ def start_the_game():
                     screen = pygame.transform.scale(window, res)
 
         khan_view = 'stop_' + khan_view
+        if key[pygame.K_1]:
+            if zoom_count < 100:
+                zoom_count += 1
+                res = [res[0] - map_zoom, res[1] - map_zoom]
+                screen = pygame.transform.scale(window, res)
+        if key[pygame.K_2]:
+            if zoom_count > 0:
+                zoom_count -= 1
+                res = [res[0] + map_zoom, res[1] + map_zoom]
+                screen = pygame.transform.scale(window, res)
+
         if not flag_dialog:
             if key[pygame.K_a]:
                 cam_x += shift

@@ -1,6 +1,5 @@
 import pygame
 
-
 ramka_sprite = pygame.sprite.Group()
 
 
