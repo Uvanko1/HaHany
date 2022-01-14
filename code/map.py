@@ -1,17 +1,16 @@
 import pygame
 
-from hints import Hints, icons_sprite
+from hints import icons_sprite, Hints
 from stats import Stats, stats_sprite
 from dialog import ramka_sprite, Dialog
 from map_static import map_sprite
 from support import import_csv_layout
 from settings import tile_size
-from tiles import AnimatedTile, CharacterTile
+from tiles import AnimatedTile, CharacterTile, list_spawn_pos
 from khan import Khan, khan_sprite
 
-Khan()
+khan = Khan()
 dialog = Dialog()
-Hints()
 stats = Stats()
 
 
@@ -39,8 +38,9 @@ def create_tile_group(layout, type):
                     sprite_group.add(sprite)
                 if type == 'people':
                     sprite = CharacterTile(tile_size, x, y, '../graphics/npc', 0.12)
+                    icon = Hints((x + 8, y - 20))
+                    icons_sprite.add(icon)
                     sprite_group.add(sprite)
-                    print(sprite)
 
     return sprite_group
 
@@ -75,8 +75,7 @@ class Map:
         self.stats_sprite = stats_sprite
         self.icons_sprite = icons_sprite
 
-    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, dialog_pos, icon_flag):
-        print(icon_flag)
+    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, d_pos, icon_flag):
         self.map_sprite.draw(surface)
 
         self.horse_sprites.draw(surface)
@@ -99,16 +98,16 @@ class Map:
 
         self.npc_sprites.update(cam_x, cam_y)
         self.npc_sprites.draw(surface)
+        self.icons_sprite.update(cam_x, cam_y)
+        self.stats_sprite.draw(surface)
 
         self.map_sprite.update(cam_x, cam_y)
 
         stats.draw_stats_text(surface, 0, 4, '4/20')
         stats.draw_stats_text(surface, 60, 4, '5/20')
         stats.draw_stats_text(surface, 120, 4, '20/20')
-        self.stats_sprite.draw(surface)
         if icon_flag:
             self.icons_sprite.draw(surface)
         if dialog_flag:
-            dialog.draw_text(surface, dialog_pos)
+            dialog.draw_text(surface, d_pos)
             self.ramka_sprite.draw(surface)
-

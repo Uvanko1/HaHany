@@ -26,7 +26,6 @@ def get_save_position():
         con.commit()
 
     data = cur.execute('''SELECT SpawnX, SpawnY FROM spawn''').fetchall()
-    print(data[-1][0], data[-1][1])
     return [data[-1][0], data[-1][1]]
 
 

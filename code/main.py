@@ -22,12 +22,11 @@ def start_the_game():
     res = [screen_width // 2, screen_height // 2]
     screen = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
-    shift = 15
+    shift = 2
     frame = 0
     map_zoom = 5
     zoom_count = 0
     khan_view = 'top'
-    dialog_pos = None
     flag_dialog = False
     flag_hint = False
     while 1:
@@ -35,8 +34,12 @@ def start_the_game():
         key = pygame.key.get_pressed()
         cam_x = 0
         cam_y = 0
-        if get_dialog(map_sprite.get_rect_pos()) is not None:
+        pos = map_sprite.get_rect_pos()
+        dialog_pos = get_dialog(pos)
+        if dialog_pos is not None:
             flag_hint = True
+        else:
+            flag_hint = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -45,7 +48,6 @@ def start_the_game():
                     pos_x, pos_y = map_sprite.get_rect_pos()
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
-                    dialog_pos = get_dialog(map_sprite.get_rect_pos())
                     if dialog_pos is not None:
                         flag_dialog = True
                 elif event.key == pygame.K_ESCAPE:

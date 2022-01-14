@@ -65,6 +65,7 @@ class CharacterTile(Tile):
         self.frames_index = 0
         self.image = self.frames[self.frames_index]
         self.stop_flag = None
+        print(self.rect.x, self.rect.y)
 
     def animate(self):
         self.frames_index += self.speed
@@ -75,7 +76,7 @@ class CharacterTile(Tile):
     def update(self, cam_x, cam_y):
         self.animate()
         if pygame.sprite.collide_mask(self, khan):
-            print("mask")
+            pass
         self.rect.x += cam_x
         self.rect.y += cam_y
 
