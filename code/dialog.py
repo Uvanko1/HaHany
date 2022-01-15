@@ -1,5 +1,6 @@
 import pygame
-from game_data import dialogs, dialogs_pos
+
+from game_data import dialogs
 
 ramka_sprite = pygame.sprite.Group()
 
@@ -18,8 +19,9 @@ class Dialog(pygame.sprite.Sprite):
         if dialog_part <= len(text_dialog) - 1:
             text_dialog_part = text_dialog[dialog_part]
             print(text_dialog_part)
-            font = pygame.font.Font(None, 32)
-            text = font.render(text_dialog_part, True, (255, 255, 255))
+            font = pygame.font.Font(None, 28)
             text_x = 30
             text_y = 273
-            screen.blit(text, (text_x, text_y))
+            lines = text_dialog_part.splitlines()
+            for i, l in enumerate(lines):
+                screen.blit(font.render(l, True, (255, 255, 255)), (text_x, text_y + 20 * i))

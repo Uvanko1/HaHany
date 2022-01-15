@@ -15,15 +15,18 @@ map_sprite = MapSprite()
 
 
 def start_the_game():
+    global res_zoom
     menu.close()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
     res = [screen_width // 2, screen_height // 2]
+    res_zoom = res
     screen = pygame.transform.scale(window, res)
+    interface = pygame.transform.scale(window, res)
     clock = pygame.time.Clock()
     shift = 2
     frame = 0
-    map_zoom = 5
+    map_zoom = 2
     zoom_count = 0
     khan_view = 'top'
     flag_dialog = False
@@ -54,20 +57,20 @@ def start_the_game():
                     dialog_part = 0
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
-                if zoom_count < 20:
+                if zoom_count < 8:
                     zoom_count += 1
-                    res = [res[0] - map_zoom, res[1] - map_zoom]
-                    screen = pygame.transform.scale(window, res)
+                    map_zoom += 1
+                    res_zoom = [res_zoom[0] - map_zoom, res_zoom[1] - map_zoom]
+                    screen = pygame.transform.scale(window, res_zoom)
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
                 if zoom_count > 0:
                     zoom_count -= 1
-                    res = [res[0] + map_zoom, res[1] + map_zoom]
-                    screen = pygame.transform.scale(window, res)
+                    res_zoom = [res_zoom[0] + map_zoom, res_zoom[1] + map_zoom]
+                    screen = pygame.transform.scale(window, res_zoom)
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 if flag_dialog:
                     print(dialog_part)
                     dialog_part += 1
-
         khan_view = 'stop_' + khan_view
         if not flag_dialog:
             if key[pygame.K_a]:
@@ -83,13 +86,15 @@ def start_the_game():
                 cam_y -= shift
                 khan_view = 'top'
         screen.fill('grey')
-        generate_map.run(screen, window,
+        generate_map.run(screen, interface,
                          cam_x, cam_y,
                          khan_view,
                          flag_dialog, dialog_pos, dialog_part,
                          flag_hint)
         pygame.display.update()
-        window.blit(pygame.transform.scale(screen, size), (0, 0))
+        window.blit(pygame.transform.scale(interface, size), (0, 0))
+        interface.blit(pygame.transform.scale(screen, res), (0, 0))
+
         clock.tick(120)
         frame += 1
         if frame % 100 == 0:

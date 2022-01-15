@@ -116,5 +116,5 @@ class Map:
             one_icon.draw(surface)
             # one_icon.sprites().clear()
         if dialog_flag:
-            dialog.draw_text(interface, d_pos, dialog_part)
             self.ramka_sprite.draw(interface)
+            dialog.draw_text(interface, d_pos, dialog_part)
