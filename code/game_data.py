@@ -9,7 +9,7 @@ mangolia_1 = {
 }
 
 dialogs_pos = [[-9060, -9450]]
-dialogs = {0: 'Дорова мир!'}
+dialogs = {0: ['Дорова мир!', 'Пока мир']}
 
 
 def get_dialog(pos):

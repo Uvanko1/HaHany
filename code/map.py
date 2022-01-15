@@ -38,8 +38,7 @@ def create_tile_group(layout, type):
                     sprite_group.add(sprite)
                 if type == 'people':
                     sprite = CharacterTile(tile_size, x, y, '../graphics/npc', 0.12)
-                    icon = Hints((x + 8, y - 20))
-                    icons_sprite.add(icon)
+                    Hints((x + 8, y - 20))
                     sprite_group.add(sprite)
 
     return sprite_group
@@ -75,7 +74,11 @@ class Map:
         self.stats_sprite = stats_sprite
         self.icons_sprite = icons_sprite
 
-    def run(self, surface, cam_x, cam_y, khan_view, dialog_flag, d_pos, icon_flag):
+    def run(self, surface, interface,
+            cam_x, cam_y,
+            khan_view,
+            dialog_flag, d_pos, dialog_part,
+            icon_flag):
         self.map_sprite.draw(surface)
 
         self.horse_sprites.draw(surface)
@@ -99,15 +102,19 @@ class Map:
         self.npc_sprites.update(cam_x, cam_y)
         self.npc_sprites.draw(surface)
         self.icons_sprite.update(cam_x, cam_y)
-        self.stats_sprite.draw(surface)
+        self.stats_sprite.draw(interface)
 
         self.map_sprite.update(cam_x, cam_y)
 
-        stats.draw_stats_text(surface, 0, 4, '4/20')
-        stats.draw_stats_text(surface, 60, 4, '5/20')
-        stats.draw_stats_text(surface, 120, 4, '20/20')
+        stats.draw_stats_text(interface, 0, 4, '4/20')
+        stats.draw_stats_text(interface, 60, 4, '5/20')
+        stats.draw_stats_text(interface, 120, 4, '20/20')
         if icon_flag:
-            self.icons_sprite.draw(surface)
+            one_icon = pygame.sprite.Group()
+            lst = self.icons_sprite.sprites()
+            one_icon.add(lst[0])
+            one_icon.draw(surface)
+            # one_icon.sprites().clear()
         if dialog_flag:
-            dialog.draw_text(surface, d_pos)
-            self.ramka_sprite.draw(surface)
+            dialog.draw_text(interface, d_pos, dialog_part)
+            self.ramka_sprite.draw(interface)
