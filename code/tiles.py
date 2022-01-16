@@ -54,7 +54,7 @@ class AnimatedTile(Tile):
 
     def get_mask(self):
         if pygame.sprite.collide_mask(self, khan):
-            pass
+            can_go = False
 
 
 class CharacterTile(Tile):
