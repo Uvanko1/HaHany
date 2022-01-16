@@ -8,7 +8,7 @@ mangolia_1 = {
     'people': '../maps/mongolia/mongolian_npc.csv'
 }
 
-dialogs_pos = [[-9060, -9450]]
+dialogs_pos = [[-9152, -9508]]
 dialogs = {0: ['Житель: \n'
                'Приветствую тебя, воин! \n C какой целью ты пожаловал к нам со свои войском?',
                'Хан: \n'

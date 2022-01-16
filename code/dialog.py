@@ -11,7 +11,7 @@ class Dialog(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(ramka_sprite)
         self.image = Dialog.image
-        self.rect = self.image.get_rect(top=250)
+        self.rect = self.image.get_rect(top=140)
         self.text_flag = False
 
     def draw_text(self, screen, pos=None, dialog_part=0):
@@ -21,7 +21,7 @@ class Dialog(pygame.sprite.Sprite):
             print(text_dialog_part)
             font = pygame.font.Font(None, 28)
             text_x = 30
-            text_y = 273
+            text_y = 140
             lines = text_dialog_part.splitlines()
             for i, l in enumerate(lines):
                 screen.blit(font.render(l, True, (255, 255, 255)), (text_x, text_y + 20 * i))

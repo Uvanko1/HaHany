@@ -1,25 +1,24 @@
 import pygame
 import pygame_menu
+import sys
 
 from settings import *
 from map import Map
 from game_data import mangolia_1, get_dialog
 from saves import save_position
 from map_static import MapSprite
-from sounds import Sounds
+from sounds import horse, all
 
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
 menu = pygame_menu.Menu('Татаро-монголы', screen_width, screen_height, theme=pygame_menu.themes.THEME_GREEN)
 menu.add.image('../graphics/menu/menu.png')
 map_sprite = MapSprite()
-sound = Sounds()
-sound_play = False
 
 
 def start_the_game():
     menu.close()
-    global sound_play
+    all()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
     res = [screen_width // 4, screen_height // 4]
@@ -35,7 +34,9 @@ def start_the_game():
     khan_view = 'top'
     flag_dialog = False
     dialog_part = 0
+
     while 1:
+        play_music = False
         menu.close()
         cam_x = 0
         cam_y = 0
@@ -65,6 +66,9 @@ def start_the_game():
                     print(zoom_count)
 
 
+
+
+
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
@@ -90,16 +94,21 @@ def start_the_game():
             if key[pygame.K_a]:
                 cam_x += shift
                 khan_view = 'left'
-                sound_play = True
+                play_music = True
             if key[pygame.K_d]:
                 cam_x -= shift
                 khan_view = 'right'
+                play_music = True
             if key[pygame.K_w]:
                 cam_y += shift
                 khan_view = 'bottom'
+                play_music = True
             if key[pygame.K_s]:
                 cam_y -= shift
                 khan_view = 'top'
+                play_music = True
+            horse(play_music)
+
         screen.fill('grey')
         generate_map.run(screen, interface,
                          cam_x, cam_y,
@@ -117,9 +126,6 @@ def start_the_game():
         if frame % 100 == 0:
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
 
-
-if sound_play:
-    sound.horse()
 
 menu.add.button('Играть', start_the_game)
 menu.mainloop(window)
