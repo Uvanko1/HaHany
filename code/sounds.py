@@ -2,7 +2,7 @@ import pygame
 
 pygame.mixer.init()
 pygame.mixer.music.load('../sounds/horse.mp3')
-alll = pygame.mixer.Sound('../sounds/SQWOZ_BAB_-_TATARSKIJJ_BOGATYR_(ru.muzikavsem.org).mp3')
+alll = pygame.mixer.Sound('../sounds/soundtrack.mp3')
 
 pygame.mixer.music.play(-1)
 pygame.mixer.music.pause()

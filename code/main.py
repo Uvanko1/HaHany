@@ -64,11 +64,6 @@ def start_the_game():
                     dialog_part = 0
                 elif event.key == pygame.K_TAB:
                     print(zoom_count)
-
-
-
-
-
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
