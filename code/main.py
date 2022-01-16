@@ -6,7 +6,6 @@ from map import Map
 from game_data import mangolia_1, get_dialog
 from saves import save_position
 from map_static import MapSprite
-from PIL import Image
 
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
