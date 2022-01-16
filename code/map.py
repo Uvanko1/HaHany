@@ -4,9 +4,9 @@ from hints import icons_sprite, Hints
 from stats import Stats, stats_sprite
 from dialog import ramka_sprite, Dialog
 from map_static import map_sprite
-from support import import_csv_layout
+from support import import_csv_layout, import_cut_graphic
 from settings import tile_size
-from tiles import AnimatedTile, CharacterTile, list_spawn_pos
+from tiles import AnimatedTile, CharacterTile, StaticTile, list_spawn_pos
 from khan import Khan, khan_sprite
 
 khan = Khan()
@@ -40,6 +40,11 @@ def create_tile_group(layout, type):
                     sprite = CharacterTile(tile_size, x, y, '../graphics/npc', 0.12)
                     Hints((x + 8, y - 20))
                     sprite_group.add(sprite)
+                if type == 'house':
+                    water_list = import_cut_graphic('../graphics/hous/Слой 2.png')
+                    tile_surface = water_list[int(val)]
+                    sprite = StaticTile(tile_size, x, y, tile_surface)
+                    sprite_group.add(sprite)
 
     return sprite_group
 
@@ -49,6 +54,9 @@ class Map:
         # импортирование положения и спрайтов лошадей
         test_layout = import_csv_layout(map_data['лошади'])
         self.horse_sprites = create_tile_group(test_layout, 'лошади')
+
+        house_layout = import_csv_layout(map_data['house'])
+        self.house_sprites = create_tile_group(house_layout, 'house')
 
         # импортирование положения и спрайтов дервьев
         forest_layout = import_csv_layout(map_data['animation_forest'])
@@ -93,20 +101,32 @@ class Map:
         self.anim_water_sprites_3.update(cam_x, cam_y)
         self.anim_water_sprites_4.update(cam_x, cam_y)
 
-        self.khan_sprite.draw(surface)
-        self.khan_sprite.update(khan_view, khan_x, khan_y)
+        self.house_sprites.draw(surface)
+        self.house_sprites.update(cam_x, cam_y)
 
         self.forest_sprites.draw(surface)
         self.forest_sprites.update(cam_x, cam_y)
 
+        self.khan_sprite.draw(surface)
+        self.khan_sprite.update(khan_view, khan_x, khan_y)
+
         self.npc_sprites.draw(surface)
         self.npc_sprites.update(cam_x, cam_y)
 
-        self.icons_sprite.update(cam_x, cam_y)
-        self.stats_sprite.draw(interface)
-
         self.map_sprite.update(cam_x, cam_y)
 
+        for spr in self.house_sprites:
+            if pygame.sprite.collide_mask(spr, khan):
+                self.mask(cam_x, cam_y)
+                break
+        else:
+            for spr in self.forest_sprites:
+                if pygame.sprite.collide_mask(spr, khan):
+                    self.mask(cam_x, cam_y)
+                    break
+
+        self.icons_sprite.update(cam_x, cam_y)
+        self.stats_sprite.draw(interface)
         stats.draw_stats_text(interface, 0, 4, '4/20')
         stats.draw_stats_text(interface, 60, 4, '5/20')
         stats.draw_stats_text(interface, 120, 4, '20/20')
@@ -119,3 +139,9 @@ class Map:
         if dialog_flag:
             self.ramka_sprite.draw(interface)
             dialog.draw_text(interface, d_pos, dialog_part)
+
+    def mask(self, cam_x, cam_y):
+        self.forest_sprites.update(-cam_x, -cam_y)
+        self.map_sprite.update(-cam_x, -cam_y)
+        self.house_sprites.update(-cam_x, -cam_y)
+        self.npc_sprites.update(-cam_x, -cam_y)
