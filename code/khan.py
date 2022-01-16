@@ -14,10 +14,12 @@ class Khan(pygame.sprite.Sprite):
         self.frames_bottom = import_folder('../graphics/khan/horse_bottom')
         self.frames_index = 0
         self.image = self.frames_top[self.frames_index]
-        self.rect = self.image.get_rect(topleft=((screen_width // 4) // 2, (screen_height // 4) // 2))
+        self.rect = self.image.get_rect(topleft=((screen_width // 4) // 2 - 5, (screen_height // 4) // 2 - 5))
         self.mask = pygame.mask.from_surface(self.image)
 
-    def update(self, side):
+    def update(self, side, move_x, move_y):
+        self.rect.x += move_x
+        self.rect.y += move_y
         self.animation(side)
 
     def animation(self, side):
@@ -40,4 +42,3 @@ class Khan(pygame.sprite.Sprite):
             self.image = self.frames_bottom[int(self.frames_index)]
         if side == 'stop_bottom':
             self.image = self.frames_bottom[0]
-

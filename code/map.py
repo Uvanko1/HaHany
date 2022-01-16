@@ -76,7 +76,7 @@ class Map:
 
     def run(self, surface, interface,
             cam_x, cam_y,
-            khan_view,
+            khan_view, khan_x, khan_y,
             dialog_flag, d_pos, dialog_part,
             icon_flag):
         self.map_sprite.draw(surface)
@@ -84,23 +84,24 @@ class Map:
         self.horse_sprites.draw(surface)
         self.horse_sprites.update(cam_x, cam_y)
 
-        self.anim_water_sprites_1.update(cam_x, cam_y)
-        self.anim_water_sprites_2.update(cam_x, cam_y)
-        self.anim_water_sprites_3.update(cam_x, cam_y)
-        self.anim_water_sprites_4.update(cam_x, cam_y)
         self.anim_water_sprites_1.draw(surface)
         self.anim_water_sprites_2.draw(surface)
         self.anim_water_sprites_3.draw(surface)
         self.anim_water_sprites_4.draw(surface)
+        self.anim_water_sprites_1.update(cam_x, cam_y)
+        self.anim_water_sprites_2.update(cam_x, cam_y)
+        self.anim_water_sprites_3.update(cam_x, cam_y)
+        self.anim_water_sprites_4.update(cam_x, cam_y)
 
         self.khan_sprite.draw(surface)
-        self.khan_sprite.update(khan_view)
+        self.khan_sprite.update(khan_view, khan_x, khan_y)
 
-        self.forest_sprites.update(cam_x, cam_y)
         self.forest_sprites.draw(surface)
+        self.forest_sprites.update(cam_x, cam_y)
 
-        self.npc_sprites.update(cam_x, cam_y)
         self.npc_sprites.draw(surface)
+        self.npc_sprites.update(cam_x, cam_y)
+
         self.icons_sprite.update(cam_x, cam_y)
         self.stats_sprite.draw(interface)
 
