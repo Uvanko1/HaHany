@@ -14,11 +14,10 @@ class Dialog(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(top=140)
         self.text_flag = False
 
-    def draw_text(self, screen, pos=None, dialog_part=0):
-        text_dialog = dialogs[pos]
+    def draw_text(self, screen, dialog_num, dialog_part=0):
+        text_dialog = dialogs[dialog_num]
         if dialog_part <= len(text_dialog) - 1:
             text_dialog_part = text_dialog[dialog_part]
-            print(text_dialog_part)
             font = pygame.font.Font(None, 28)
             text_x = 30
             text_y = 140

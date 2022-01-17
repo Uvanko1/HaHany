@@ -81,12 +81,14 @@ class Map:
         self.ramka_sprite = ramka_sprite
         self.stats_sprite = stats_sprite
         self.icons_sprite = icons_sprite
+        self.icon_flag = False
+        self.one_icon = pygame.sprite.Group()
+        self.dialog_num = None
 
     def run(self, surface, interface,
             cam_x, cam_y,
             khan_view, khan_x, khan_y,
-            dialog_flag, d_pos, dialog_part,
-            icon_flag):
+            dialog_flag, dialog_part):
         self.map_sprite.draw(surface)
 
         self.horse_sprites.draw(surface)
@@ -114,34 +116,43 @@ class Map:
         self.npc_sprites.update(cam_x, cam_y)
 
         self.map_sprite.update(cam_x, cam_y)
-
-        for spr in self.house_sprites:
+        for val, spr in enumerate(self.npc_sprites):
             if pygame.sprite.collide_mask(spr, khan):
                 self.mask(cam_x, cam_y)
+                self.dialog_num = val
+                self.icon_flag = True
                 break
+            else:
+                self.icon_flag = False
         else:
-            for spr in self.forest_sprites:
+            for spr in self.house_sprites:
                 if pygame.sprite.collide_mask(spr, khan):
                     self.mask(cam_x, cam_y)
                     break
-
+            else:
+                for spr in self.forest_sprites:
+                    if pygame.sprite.collide_mask(spr, khan):
+                        self.mask(cam_x, cam_y)
+                        break
         self.icons_sprite.update(cam_x, cam_y)
+        if self.icon_flag:
+            self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
+            self.one_icon.draw(surface)
+            self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
+            print(self.one_icon)
         self.stats_sprite.draw(interface)
         stats.draw_stats_text(interface, 0, 4, '4/20')
         stats.draw_stats_text(interface, 60, 4, '5/20')
         stats.draw_stats_text(interface, 120, 4, '20/20')
-        if icon_flag:
-            one_icon = pygame.sprite.Group()
-            lst = self.icons_sprite.sprites()
-            one_icon.add(lst[0])
-            one_icon.draw(surface)
-            # one_icon.sprites().clear()
         if dialog_flag:
             self.ramka_sprite.draw(interface)
-            dialog.draw_text(interface, d_pos, dialog_part)
+            dialog.draw_text(interface, self.dialog_num, dialog_part)
+        else:
+            self.icon_flag = False
 
     def mask(self, cam_x, cam_y):
         self.forest_sprites.update(-cam_x, -cam_y)
         self.map_sprite.update(-cam_x, -cam_y)
         self.house_sprites.update(-cam_x, -cam_y)
         self.npc_sprites.update(-cam_x, -cam_y)
+        self.icons_sprite.update(-cam_x, -cam_y)

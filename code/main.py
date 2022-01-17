@@ -4,7 +4,7 @@ import sys
 
 from settings import *
 from map import Map
-from game_data import mangolia_1, get_dialog
+from game_data import mangolia_1
 from saves import save_position
 from map_static import MapSprite
 from sounds import horse, all
@@ -44,11 +44,6 @@ def start_the_game():
         khan_y = 0
         key = pygame.key.get_pressed()
         pos = map_sprite.get_rect_pos()
-        dialog_pos = get_dialog(pos)
-        if dialog_pos is not None:
-            flag_hint = True
-        else:
-            flag_hint = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -57,13 +52,9 @@ def start_the_game():
                     pos_x, pos_y = map_sprite.get_rect_pos()
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
-                    if dialog_pos is not None:
-                        flag_dialog = True
+                    flag_dialog = True
                 elif event.key == pygame.K_ESCAPE:
                     flag_dialog = False
-                    dialog_part = 0
-                elif event.key == pygame.K_TAB:
-                    print(zoom_count)
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
@@ -108,8 +99,7 @@ def start_the_game():
         generate_map.run(screen, interface,
                          cam_x, cam_y,
                          khan_view, khan_x, khan_y,
-                         flag_dialog, dialog_pos, dialog_part,
-                         flag_hint)
+                         flag_dialog, dialog_part)
         pygame.display.update()
         window.blit(pygame.transform.scale(interface, size), (0, 0))
         interface.blit(

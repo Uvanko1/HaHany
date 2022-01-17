@@ -10,17 +10,9 @@ mangolia_1 = {
     'house': '../maps/mongolia/mongolian_hous.csv'
 }
 
-dialogs_pos = [[-9152, -9508]]
 dialogs = {0: ['Житель: \n'
                'Приветствую тебя, воин! \n C какой целью ты пожаловал к нам со свои войском?',
                'Хан: \n'
                'Я хочу объединить наш народ и для этого мне нужны воины.\n'
                'Позволь мне забрать юношей и обучить их \nнашему воинскому ремеслу,\n'
                'а я в свою очередь щедро награжу тебя.']}
-
-
-def get_dialog(pos):
-    for p in range(len(dialogs_pos)):
-        if dialogs_pos[p][0] - 20 <= pos[0] <= dialogs_pos[p][0] + 20 \
-                and dialogs_pos[p][1] - 20 <= pos[1] <= dialogs_pos[p][1] + 20:
-            return p
