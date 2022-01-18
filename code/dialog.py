@@ -21,6 +21,8 @@ class Dialog(pygame.sprite.Sprite):
             if dialog_part <= len(text_dialog) - 1:
                 text_dialog_part = text_dialog[dialog_part]
                 print(text_dialog)
+            else:
+                text_dialog_part = 'esc - закрыть'
         except KeyError:
             text_dialog_part = 'Не со мной говори, тут вопросы не я решаю'
         font = pygame.font.Font(None, 28)

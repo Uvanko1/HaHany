@@ -17,7 +17,6 @@ class Tile(pygame.sprite.Sprite):
     def __init__(self, size, x, y):
         super().__init__()
         self.image = pygame.Surface((size, size))
-        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect(topleft=(x, y))
         self.rect.x += list_spawn_pos[0]
         self.rect.y += list_spawn_pos[1]
@@ -55,7 +54,7 @@ class AnimatedTile(Tile):
 
     def get_mask(self):
         if pygame.sprite.collide_mask(self, khan):
-            can_go = False
+            pass
 
 
 class CharacterTile(Tile):
