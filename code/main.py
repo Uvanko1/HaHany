@@ -43,6 +43,8 @@ def start_the_game():
         cam_y = 0
         khan_x = 0
         khan_y = 0
+        cam_zoom_x = 0
+        cam_zoom_y = 0
         key = pygame.key.get_pressed()
         pos = map_sprite.get_rect_pos()
         for event in pygame.event.get():
@@ -67,16 +69,16 @@ def start_the_game():
                 if zoom_count < 10:
                     zoom_count += 1
                     res_zoom = [res_zoom[0] - map_zoom_x, res_zoom[1] - map_zoom_y]
-                    cam_x -= map_zoom_x // 2
-                    cam_y -= map_zoom_y // 2
+                    cam_zoom_x -= map_zoom_x // 2
+                    cam_zoom_y -= map_zoom_y // 2
                     khan_x -= map_zoom_x // 2
                     khan_y -= map_zoom_y // 2
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
                 if zoom_count > 0:
                     zoom_count -= 1
                     res_zoom = [res_zoom[0] + map_zoom_x, res_zoom[1] + map_zoom_y]
-                    cam_x += map_zoom_x // 2
-                    cam_y += map_zoom_y // 2
+                    cam_zoom_x += map_zoom_x // 2
+                    cam_zoom_y += map_zoom_y // 2
                     khan_x += map_zoom_x // 2
                     khan_y += map_zoom_y // 2
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
@@ -105,7 +107,7 @@ def start_the_game():
 
         screen.fill('grey')
         generate_map.run(screen, interface,
-                         cam_x, cam_y,
+                         cam_x, cam_y, cam_zoom_x, cam_zoom_y,
                          khan_view, khan_x, khan_y,
                          flag_dialog, dialog_part)
         pygame.display.update()

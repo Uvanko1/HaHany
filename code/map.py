@@ -86,55 +86,55 @@ class Map:
         self.dialog_num = None
 
     def run(self, surface, interface,
-            cam_x, cam_y,
+            cam_x, cam_y, cam_zoom_x, cam_zoom_y,
             khan_view, khan_x, khan_y,
             dialog_flag, dialog_part):
         self.map_sprite.draw(surface)
 
         self.horse_sprites.draw(surface)
-        self.horse_sprites.update(cam_x, cam_y)
+        self.horse_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
         self.anim_water_sprites_1.draw(surface)
         self.anim_water_sprites_2.draw(surface)
         self.anim_water_sprites_3.draw(surface)
         self.anim_water_sprites_4.draw(surface)
-        self.anim_water_sprites_1.update(cam_x, cam_y)
-        self.anim_water_sprites_2.update(cam_x, cam_y)
-        self.anim_water_sprites_3.update(cam_x, cam_y)
-        self.anim_water_sprites_4.update(cam_x, cam_y)
+        self.anim_water_sprites_1.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+        self.anim_water_sprites_2.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+        self.anim_water_sprites_3.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+        self.anim_water_sprites_4.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
         self.house_sprites.draw(surface)
-        self.house_sprites.update(cam_x, cam_y)
+        self.house_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
         self.forest_sprites.draw(surface)
-        self.forest_sprites.update(cam_x, cam_y)
+        self.forest_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
         self.khan_sprite.draw(surface)
         self.khan_sprite.update(khan_view, khan_x, khan_y)
 
         self.npc_sprites.draw(surface)
-        self.npc_sprites.update(cam_x, cam_y)
+        self.npc_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-        self.map_sprite.update(cam_x, cam_y)
+        self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
         self.icon_flag = False
         for val, spr in enumerate(self.npc_sprites):
             if pygame.sprite.collide_rect(spr, khan):
                 self.dialog_num = val
                 self.icon_flag = True
             elif pygame.sprite.collide_mask(spr, khan):
-                self.mask(cam_x, cam_y)
+                self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                 break
         else:
             for spr in self.house_sprites:
                 if pygame.sprite.collide_mask(spr, khan):
-                    self.mask(cam_x, cam_y)
+                    self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                     break
             else:
                 for spr in self.forest_sprites:
                     if pygame.sprite.collide_mask(spr, khan):
-                        self.mask(cam_x, cam_y)
+                        self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                         break
-        self.icons_sprite.update(cam_x, cam_y)
+        self.icons_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
         if self.icon_flag:
             self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
             self.one_icon.draw(surface)
@@ -147,9 +147,9 @@ class Map:
         stats.draw_stats_text(interface, 60, 4, '5/20')
         stats.draw_stats_text(interface, 120, 4, '20/20')
 
-    def mask(self, cam_x, cam_y):
-        self.forest_sprites.update(-cam_x, -cam_y)
-        self.map_sprite.update(-cam_x, -cam_y)
-        self.house_sprites.update(-cam_x, -cam_y)
-        self.npc_sprites.update(-cam_x, -cam_y)
-        self.icons_sprite.update(-cam_x, -cam_y)
+    def mask(self, cam_x, cam_y, cam_zoom_x, cam_zoom_y):
+        self.forest_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.map_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.house_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.npc_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.icons_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
