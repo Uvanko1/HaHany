@@ -100,6 +100,7 @@ def start_the_game():
                 cam_y -= shift
                 khan_view = 'top'
                 play_music = True
+            print(flag_dialog)
             horse(play_music)
 
         screen.fill('grey')
