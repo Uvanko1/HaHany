@@ -1,6 +1,5 @@
 import pygame
 import pygame_menu
-import sys
 
 from settings import *
 from map import Map
@@ -13,6 +12,8 @@ pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
 menu = pygame_menu.Menu('Татаро-монголы', screen_width, screen_height, theme=pygame_menu.themes.THEME_GREEN)
 menu.add.image('../graphics/menu/menu.png')
+menu_exit = pygame_menu.Menu('Татаро-монголы', screen_width // 2, screen_height // 2,
+                             theme=pygame_menu.themes.THEME_GREEN)
 map_sprite = MapSprite()
 
 
@@ -53,8 +54,14 @@ def start_the_game():
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
                     flag_dialog = True
-                elif event.key == pygame.K_ESCAPE:
+                elif event.key == pygame.K_ESCAPE and flag_dialog:
                     flag_dialog = False
+                elif event.key == pygame.K_ESCAPE:
+                    menu_exit.mainloop(window)
+                # map demo
+                elif event.key == pygame.K_m:
+                    image = pygame.image.load('../maps/map_data/map.png')
+                    window.blit(image, (0, 0))
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
@@ -112,5 +119,17 @@ def start_the_game():
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
 
 
+def quit():
+    exit()
+
+
+def close_menu():
+    menu_exit.close()
+    start_the_game()
+
+
 menu.add.button('Играть', start_the_game)
+menu_exit.add.label('Вы уверены что хотите выйти?')
+menu_exit.add.button('Да', quit)
+menu_exit.add.button('Нет', close_menu)
 menu.mainloop(window)
