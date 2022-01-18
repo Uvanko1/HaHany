@@ -116,14 +116,14 @@ class Map:
         self.npc_sprites.update(cam_x, cam_y)
 
         self.map_sprite.update(cam_x, cam_y)
+        self.icon_flag = False
         for val, spr in enumerate(self.npc_sprites):
-            if pygame.sprite.collide_mask(spr, khan):
-                self.mask(cam_x, cam_y)
+            if pygame.sprite.collide_rect(spr, khan):
                 self.dialog_num = val
                 self.icon_flag = True
+            elif pygame.sprite.collide_mask(spr, khan):
+                self.mask(cam_x, cam_y)
                 break
-            else:
-                self.icon_flag = False
         else:
             for spr in self.house_sprites:
                 if pygame.sprite.collide_mask(spr, khan):
@@ -139,16 +139,13 @@ class Map:
             self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
             self.one_icon.draw(surface)
             self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
-            print(self.one_icon)
+            if dialog_flag:
+                self.ramka_sprite.draw(interface)
+                dialog.draw_text(interface, self.dialog_num, dialog_part)
         self.stats_sprite.draw(interface)
         stats.draw_stats_text(interface, 0, 4, '4/20')
         stats.draw_stats_text(interface, 60, 4, '5/20')
         stats.draw_stats_text(interface, 120, 4, '20/20')
-        if dialog_flag:
-            self.ramka_sprite.draw(interface)
-            dialog.draw_text(interface, self.dialog_num, dialog_part)
-        else:
-            self.icon_flag = False
 
     def mask(self, cam_x, cam_y):
         self.forest_sprites.update(-cam_x, -cam_y)
