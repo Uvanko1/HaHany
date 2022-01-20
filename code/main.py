@@ -6,7 +6,7 @@ from map import Map
 from game_data import mangolia_1
 from saves import save_position
 from map_static import MapSprite
-from sounds import horse, all
+from sounds import horse, soundtrack_on, cut_tree_sound
 
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height))
@@ -15,18 +15,19 @@ menu.add.image('../graphics/menu/menu.png')
 menu_exit = pygame_menu.Menu('Татаро-монголы', screen_width // 2, screen_height // 2,
                              theme=pygame_menu.themes.THEME_GREEN)
 map_sprite = MapSprite()
+clock = pygame.time.Clock()
 
 
 def start_the_game():
     menu.close()
-    all()
+    soundtrack_on()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
     res = [screen_width // 4, screen_height // 4]
     res_zoom = res
     screen = pygame.transform.scale(window, res)
     interface = pygame.transform.scale(window, res)
-    clock = pygame.time.Clock()
+
     shift = 2
     frame = 0
     map_zoom_x = 16
@@ -35,6 +36,7 @@ def start_the_game():
     khan_view = 'top'
     flag_action = False
     dialog_part = 0
+    map_flag = False
 
     while 1:
         play_music = False
@@ -52,6 +54,8 @@ def start_the_game():
                 exit()
             elif event.type == pygame.KEYUP:
                 flag_action = False
+                map_flag = False
+                cut_tree_sound(False)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F5:
                     pos_x, pos_y = map_sprite.get_rect_pos()
@@ -64,8 +68,7 @@ def start_the_game():
                     menu_exit.mainloop(window)
                 # map demo
                 elif event.key == pygame.K_m:
-                    image = pygame.image.load('../maps/map_data/map.png')
-                    window.blit(image, (0, 0))
+                    map_flag = True
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_e:
                     flag_action = False
@@ -109,7 +112,8 @@ def start_the_game():
             play_music = True
         horse(play_music)
 
-        screen.fill('grey')
+        screen.fill((244, 202, 93))
+        generate_map.map_view(window, map_flag)
         generate_map.run(screen, interface,
                          cam_x, cam_y, cam_zoom_x, cam_zoom_y,
                          khan_view, khan_x, khan_y,
@@ -120,7 +124,7 @@ def start_the_game():
             pygame.transform.scale(screen, res),
             (0, 0))
         screen = pygame.transform.scale(window, res_zoom)
-        clock.tick(120)
+        clock.tick(60)
         frame += 1
         if frame % 100 == 0:
             pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))

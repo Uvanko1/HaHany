@@ -13,7 +13,7 @@ class Stats:
         self.mongol.rect = self.horse.image.get_rect(left=90)
         self.wood = pygame.sprite.Sprite(stats_sprite)
         self.wood.image = pygame.image.load('../graphics/stats/wood_stats.png')
-        self.wood.rect = self.wood.image.get_rect(left=150)
+        self.wood.rect = self.wood.image.get_rect(left=130)
 
     def draw_stats_text(self, screen, text_x, text_y, text):
         font = pygame.font.SysFont('Arial', 20)

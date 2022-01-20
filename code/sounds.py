@@ -2,7 +2,8 @@ import pygame
 
 pygame.mixer.init()
 pygame.mixer.music.load('../sounds/horse.mp3')
-alll = pygame.mixer.Sound('../sounds/soundtrack.mp3')
+soundtrack = pygame.mixer.Sound('../sounds/soundtrack.mp3')
+cut_tree = pygame.mixer.Sound('../sounds/cut_tree.mp3')
 
 pygame.mixer.music.play(-1)
 pygame.mixer.music.pause()
@@ -15,6 +16,14 @@ def horse(play_music):
         pygame.mixer.music.pause()
 
 
-def all():
-    alll.set_volume(0.2)
-    alll.play(-1)
+def soundtrack_on():
+    soundtrack.set_volume(0.2)
+    soundtrack.play(-1)
+
+
+def cut_tree_sound(flag):
+    cut_tree.set_volume(0.8)
+    if flag:
+        cut_tree.play()
+    else:
+        cut_tree.stop()

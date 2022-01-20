@@ -8,10 +8,12 @@ from support import import_csv_layout, import_cut_graphic
 from settings import tile_size
 from tiles import AnimatedTile, CharacterTile, StaticTile, list_spawn_pos
 from khan import Khan, khan_sprite
+from sounds import cut_tree_sound
 
 khan = Khan()
 dialog = Dialog()
 stats = Stats()
+clock = pygame.time.Clock()
 
 
 def create_tile_group(layout, type):
@@ -95,85 +97,88 @@ class Map:
         self.khan_view = 'top'
         self.farm_tree = None
         self.flag_action = False
+        self.stop_flag = False
+        self.stat_forest = '0'
 
     def run(self, surface, interface,
             cam_x, cam_y, cam_zoom_x, cam_zoom_y,
             khan_view, khan_x, khan_y,
             flag_action, dialog_part):
 
-        self.khan_view = khan_view
-        self.map_sprite.draw(surface)
-        self.flag_action = flag_action
+        if not self.stop_flag:
 
-        self.horse_sprites.draw(surface)
-        self.horse_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.khan_view = khan_view
+            self.map_sprite.draw(surface)
+            self.flag_action = flag_action
 
-        self.anim_water_sprites_1.draw(surface)
-        self.anim_water_sprites_2.draw(surface)
-        self.anim_water_sprites_3.draw(surface)
-        self.anim_water_sprites_4.draw(surface)
-        self.anim_water_sprites_1.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.anim_water_sprites_2.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.anim_water_sprites_3.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.anim_water_sprites_4.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.horse_sprites.draw(surface)
+            self.horse_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-        self.khan_sprite.draw(surface)
-        self.khan_sprite.update(khan_view, khan_x, khan_y)
+            self.anim_water_sprites_1.draw(surface)
+            self.anim_water_sprites_2.draw(surface)
+            self.anim_water_sprites_3.draw(surface)
+            self.anim_water_sprites_4.draw(surface)
+            self.anim_water_sprites_1.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.anim_water_sprites_2.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.anim_water_sprites_3.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.anim_water_sprites_4.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-        self.cut_forest.draw(surface)
-        self.cut_forest.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.forest_farm_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.forest_sprites.draw(surface)
-        self.forest_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.khan_sprite.draw(surface)
+            self.khan_sprite.update(khan_view, khan_x, khan_y)
 
-        self.house_sprites.draw(surface)
-        self.house_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.cut_forest.draw(surface)
+            self.cut_forest.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.forest_farm_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.forest_sprites.draw(surface)
+            self.forest_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-        self.npc_sprites.draw(surface)
-        self.npc_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.icons_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.house_sprites.draw(surface)
+            self.house_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-        self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-        self.icon_flag = False
-        self.farm_flag = False
-        for val, spr in enumerate(self.npc_sprites):
-            if pygame.sprite.collide_rect(spr, khan):
-                self.dialog_num = val
-                self.icon_flag = True
-            if pygame.sprite.collide_mask(spr, khan):
-                self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
-                break
-        else:
-            for spr in self.house_sprites:
+            self.npc_sprites.draw(surface)
+            self.npc_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.icons_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
+            self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+            self.icon_flag = False
+            self.farm_flag = False
+            for val, spr in enumerate(self.npc_sprites):
+                if pygame.sprite.collide_rect(spr, khan):
+                    self.dialog_num = val
+                    self.icon_flag = True
                 if pygame.sprite.collide_mask(spr, khan):
                     self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                     break
             else:
-                for val, spr in enumerate(self.forest_sprites):
-                    if pygame.sprite.collide_rect(spr, khan):
-                        self.farm_flag = True
-                        self.farm_tree = val
+                for spr in self.house_sprites:
+                    if pygame.sprite.collide_mask(spr, khan):
+                        self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
+                        break
+                else:
+                    for val, spr in enumerate(self.forest_sprites):
+                        if pygame.sprite.collide_rect(spr, khan):
+                            self.farm_flag = True
+                            self.farm_tree = val
 
-        if self.icon_flag:
-            self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
-            self.one_icon.draw(surface)
-            self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
-        if self.flag_action and self.icon_flag:
-            self.ramka_sprite.draw(interface)
-            dialog.draw_text(interface, self.dialog_num, dialog_part)
-        if self.farm_flag and self.flag_action:
-            spr = self.forest_farm_sprites.sprites()[self.farm_tree]
-            self.cut_forest.add(spr)
-            self.forest_farm_sprites.remove(self.forest_farm_sprites.sprites()[self.farm_tree])
-            self.forest_sprites.remove(self.forest_sprites.sprites()[self.farm_tree])
-            print(self.forest_sprites)
-            print(self.forest_farm_sprites)
-            print(self.cut_forest)
+            if self.icon_flag:
+                self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
+                self.one_icon.draw(surface)
+                self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
+            if self.flag_action and self.icon_flag:
+                # self.ramka_sprite.draw(interface)
+                dialog.draw_text(interface, self.dialog_num, dialog_part)
+            if self.farm_flag and self.flag_action:
+                cut_tree_sound(True)
+                spr = self.forest_farm_sprites.sprites()[self.farm_tree]
+                self.cut_forest.add(spr)
+                self.forest_farm_sprites.remove(self.forest_farm_sprites.sprites()[self.farm_tree])
+                self.forest_sprites.remove(self.forest_sprites.sprites()[self.farm_tree])
+                self.stat_forest = str(int(self.stat_forest) + 1)
 
-        self.stats_sprite.draw(interface)
-        stats.draw_stats_text(interface, 0, 4, '4/20')
-        stats.draw_stats_text(interface, 60, 4, '5/20')
-        stats.draw_stats_text(interface, 120, 4, '20/20')
+            self.stats_sprite.draw(interface)
+            stats.draw_stats_text(interface, 0, 4, '4/20')
+            stats.draw_stats_text(interface, 60, 4, '5/20')
+            stats.draw_stats_text(interface, 120, 4, self.stat_forest)
 
     def mask(self, cam_x, cam_y, cam_zoom_x, cam_zoom_y):
         self.cut_forest.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
@@ -183,3 +188,11 @@ class Map:
         self.npc_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.icons_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.forest_farm_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+
+    def map_view(self, surface, map_flag):
+        if map_flag:
+            self.stop_flag = True
+            image = pygame.image.load('../maps/map_data/map.png')
+            surface.blit(image, (0, 0))
+        else:
+            self.stop_flag = False
