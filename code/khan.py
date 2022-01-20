@@ -15,6 +15,7 @@ class Khan(pygame.sprite.Sprite):
         self.frames_index = 0
         self.image = self.frames_top[self.frames_index]
         self.rect = self.image.get_rect(topleft=((screen_width // 4) // 2 - 5, (screen_height // 4) // 2 - 5))
+        mask_surf = pygame.Surface((16, 12))
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, side, move_x, move_y):
