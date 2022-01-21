@@ -159,13 +159,15 @@ class Map:
                         if pygame.sprite.collide_rect(spr, khan):
                             self.farm_flag = True
                             self.farm_tree = val
+                        if pygame.sprite.collide_mask(spr, khan):
+                            self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
 
             if self.icon_flag:
                 self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
                 self.one_icon.draw(surface)
                 self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
             if self.flag_action and self.icon_flag:
-                # self.ramka_sprite.draw(interface)
+                self.ramka_sprite.draw(interface)
                 dialog.draw_text(interface, self.dialog_num, dialog_part)
             if self.farm_flag and self.flag_action:
                 cut_tree_sound(True)

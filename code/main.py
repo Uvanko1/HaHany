@@ -26,9 +26,8 @@ def start_the_game():
     res = [screen_width // 4, screen_height // 4]
     res_zoom = res
     screen = pygame.transform.scale(window, res)
-    interface = pygame.transform.scale(window, res)
 
-    shift = 2
+    shift = 15
     frame = 0
     map_zoom_x = 16
     map_zoom_y = 9
@@ -36,6 +35,7 @@ def start_the_game():
     khan_view = 'top'
     flag_action = False
     dialog_part = 0
+    dialog_flag = False
     map_flag = False
 
     while 1:
@@ -52,10 +52,6 @@ def start_the_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-            elif event.type == pygame.KEYUP:
-                flag_action = False
-                map_flag = False
-                cut_tree_sound(False)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F5:
                     pos_x, pos_y = map_sprite.get_rect_pos()
@@ -72,6 +68,9 @@ def start_the_game():
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_e:
                     flag_action = False
+                if event.key == pygame.K_m:
+                    map_flag = False
+                    cut_tree_sound(False)
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
@@ -93,7 +92,6 @@ def start_the_game():
                 if flag_action:
                     dialog_part += 1
         khan_view = 'stop_' + khan_view
-
         if key[pygame.K_a]:
             cam_x += shift
             khan_view = 'left'
@@ -114,15 +112,12 @@ def start_the_game():
 
         screen.fill((244, 202, 93))
         generate_map.map_view(window, map_flag)
-        generate_map.run(screen, interface,
+        generate_map.run(screen, window,
                          cam_x, cam_y, cam_zoom_x, cam_zoom_y,
                          khan_view, khan_x, khan_y,
                          flag_action, dialog_part)
         pygame.display.update()
-        window.blit(pygame.transform.scale(interface, size), (0, 0))
-        interface.blit(
-            pygame.transform.scale(screen, res),
-            (0, 0))
+        window.blit(pygame.transform.scale(screen, size), (0, 0))
         screen = pygame.transform.scale(window, res_zoom)
         clock.tick(60)
         frame += 1

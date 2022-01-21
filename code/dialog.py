@@ -25,7 +25,7 @@ class Dialog(pygame.sprite.Sprite):
                 text_dialog_part = 'esc - закрыть'
         except KeyError:
             text_dialog_part = 'Не со мной говори, тут вопросы не я решаю'
-        font = pygame.font.Font('../fonts/Verdana.ttf', 21)
+        font = pygame.font.Font(None, 21)
         text_x = 30
         text_y = 140
         lines = text_dialog_part.splitlines()
