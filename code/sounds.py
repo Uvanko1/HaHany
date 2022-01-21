@@ -17,7 +17,7 @@ def horse(play_music):
 
 
 def soundtrack_on():
-    soundtrack.set_volume(0.2)
+    soundtrack.set_volume(0.1)
     soundtrack.play(-1)
 
 

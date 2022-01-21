@@ -16,6 +16,7 @@ menu_exit = pygame_menu.Menu('Татаро-монголы', screen_width // 2, s
                              theme=pygame_menu.themes.THEME_GREEN)
 map_sprite = MapSprite()
 clock = pygame.time.Clock()
+flag_soundtrack = True
 
 
 def start_the_game():
@@ -26,7 +27,6 @@ def start_the_game():
     res = [screen_width // 4, screen_height // 4]
     res_zoom = res
     screen = pygame.transform.scale(window, res)
-
     shift = 2
     frame = 0
     map_zoom_x = 16
