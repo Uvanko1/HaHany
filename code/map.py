@@ -59,6 +59,8 @@ def create_tile_group(layout, type):
 
 class Map:
     def __init__(self, map_data):
+        # fire_layout = import_csv_layout(map_data['fire'])
+        # self.horse_sprites = create_tile_group(fire_layout, 'fire')
         # импортирование положения и спрайтов лошадей
         test_layout = import_csv_layout(map_data['лошади'])
         self.horse_sprites = create_tile_group(test_layout, 'лошади')
@@ -109,13 +111,12 @@ class Map:
             khan_view, khan_x, khan_y,
             flag_action, dialog_part):
 
+        self.khan_view = khan_view
+        self.flag_action = flag_action
+
+        # отрисовка и обновление спрайта карты
+        self.map_sprite.draw(surface)
         if not self.stop_flag:
-
-            self.khan_view = khan_view
-            self.flag_action = flag_action
-
-            # отрисовка и обновление спрайта карты
-            self.map_sprite.draw(surface)
             self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
             self.horse_sprites.draw(surface)
@@ -131,16 +132,15 @@ class Map:
             self.anim_water_sprites_3.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
             self.anim_water_sprites_4.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
+            # срубленный лес сейчас
+            self.cut_forest.draw(surface)
+            self.cut_forest.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
             # отрисовка и обновление спрайтов главного героя
             self.khan_sprite.draw(surface)
             self.khan_sprite.update(khan_view, khan_x, khan_y)
 
             # отрисовка и обновление спрайтов леса
-
-            # срубленный лес сейчас
-            self.cut_forest.draw(surface)
-            self.cut_forest.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
-
             # неотображаемые спрайты срубленных деревьев
             self.forest_farm_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 

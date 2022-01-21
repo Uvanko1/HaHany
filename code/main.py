@@ -35,7 +35,6 @@ def start_the_game():
     khan_view = 'top'
     flag_action = False
     dialog_part = 0
-    dialog_flag = False
     map_flag = False
 
     while 1:
@@ -49,7 +48,7 @@ def start_the_game():
         cam_zoom_y = 0
         key = pygame.key.get_pressed()
         pos = map_sprite.get_rect_pos()
-        icnon_flag, dialog_flag = generate_map.get_map_flags()
+        farm_flag, dialog_flag = generate_map.get_map_flags()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -117,12 +116,13 @@ def start_the_game():
                 play_music = True
             horse(play_music)
 
-        screen.fill((244, 202, 93))
-        generate_map.map_view(window, map_flag)
+        screen.fill('grey')
+
         generate_map.run(screen, window,
                          cam_x, cam_y, cam_zoom_x, cam_zoom_y,
                          khan_view, khan_x, khan_y,
                          flag_action, dialog_part)
+        generate_map.map_view(window, map_flag)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         screen = pygame.transform.scale(window, res_zoom)

@@ -40,7 +40,7 @@ class AnimatedTile(Tile):
         self.frames_index = 0
         self.image = self.frames[self.frames_index]
         self.stop_flag = None
-        mask_surf = pygame.Surface((14, 32))
+        mask_surf = pygame.Surface((14, 26))
         self.mask = pygame.mask.from_surface(mask_surf)
 
     def animate(self):

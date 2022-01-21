@@ -15,7 +15,6 @@ class Dialog(pygame.sprite.Sprite):
         self.text_flag = False
 
     def draw_text(self, screen, dialog_num, dialog_part=0):
-        text_dialog_part = None
         try:
             text_dialog = dialogs[dialog_num]
             if dialog_part <= len(text_dialog) - 1:
