@@ -204,8 +204,8 @@ class Map:
             # отрисовка статов
             self.stats_sprite.draw(interface)
             stats.draw_stats_text(interface, 0, 4, '4/20')
-            stats.draw_stats_text(interface, 60, 4, '5/20')
-            stats.draw_stats_text(interface, 120, 4, self.stat_forest)
+            stats.draw_stats_text(interface, 90, 4, '5/20')
+            stats.draw_stats_text(interface, 180, 4, self.stat_forest)
 
     # функция возвращения спрайтов до области маски
     def mask(self, cam_x, cam_y, cam_zoom_x, cam_zoom_y):
