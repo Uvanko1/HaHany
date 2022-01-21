@@ -16,6 +16,7 @@ stats = Stats()
 clock = pygame.time.Clock()
 
 
+# функция создания групп спрайтов по csv
 def create_tile_group(layout, type):
     sprite_group = pygame.sprite.Group()
     for row_index, row in enumerate(layout):
@@ -59,7 +60,6 @@ def create_tile_group(layout, type):
 class Map:
     def __init__(self, map_data):
         # импортирование положения и спрайтов лошадей
-        self.farm_flag = None
         test_layout = import_csv_layout(map_data['лошади'])
         self.horse_sprites = create_tile_group(test_layout, 'лошади')
 
@@ -85,20 +85,24 @@ class Map:
         npc_layout = import_csv_layout(map_data['people'])
         self.npc_sprites = create_tile_group(npc_layout, 'people')
 
+        # изначальные спрайты, без импортирования и создания
         self.map_sprite = map_sprite
         self.khan_sprite = khan_sprite
         self.ramka_sprite = ramka_sprite
         self.stats_sprite = stats_sprite
         self.icons_sprite = icons_sprite
-        self.icon_flag = False
         self.one_icon = pygame.sprite.Group()
         self.cut_forest = pygame.sprite.Group()
+
+        # флаги
+        self.icon_flag = False
         self.dialog_num = None
         self.khan_view = 'top'
         self.farm_tree = None
         self.flag_action = False
         self.stop_flag = False
         self.stat_forest = '0'
+        self.farm_flag = False
 
     def run(self, surface, interface,
             cam_x, cam_y, cam_zoom_x, cam_zoom_y,
@@ -108,12 +112,16 @@ class Map:
         if not self.stop_flag:
 
             self.khan_view = khan_view
-            self.map_sprite.draw(surface)
             self.flag_action = flag_action
+
+            # отрисовка и обновление спрайта карты
+            self.map_sprite.draw(surface)
+            self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
             self.horse_sprites.draw(surface)
             self.horse_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
+            # отрисовка и обновление спрайтов озера, каждого угла
             self.anim_water_sprites_1.draw(surface)
             self.anim_water_sprites_2.draw(surface)
             self.anim_water_sprites_3.draw(surface)
@@ -123,25 +131,36 @@ class Map:
             self.anim_water_sprites_3.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
             self.anim_water_sprites_4.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
+            # отрисовка и обновление спрайтов главного героя
             self.khan_sprite.draw(surface)
             self.khan_sprite.update(khan_view, khan_x, khan_y)
 
+            # отрисовка и обновление спрайтов леса
+
+            # срубленный лес сейчас
             self.cut_forest.draw(surface)
             self.cut_forest.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
+            # неотображаемые спрайты срубленных деревьев
             self.forest_farm_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
+            # лес
             self.forest_sprites.draw(surface)
             self.forest_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
+            # отрисовка и обновление спрайтов жилищ
             self.house_sprites.draw(surface)
             self.house_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
+            # отрисовка и обновление спрайтов жителей
             self.npc_sprites.draw(surface)
             self.npc_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
             self.icons_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
-            self.map_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
             self.icon_flag = False
             self.farm_flag = False
+
+            # нахождение столкновений по маске и ректу
             for val, spr in enumerate(self.npc_sprites):
                 if pygame.sprite.collide_rect(spr, khan):
                     self.dialog_num = val
@@ -162,13 +181,18 @@ class Map:
                         if pygame.sprite.collide_mask(spr, khan):
                             self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
 
+            # отображение спрайта иконки над персонажем
             if self.icon_flag:
                 self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
                 self.one_icon.draw(surface)
                 self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
+
+            # отображение диалога
             if self.flag_action and self.icon_flag:
                 self.ramka_sprite.draw(interface)
                 dialog.draw_text(interface, self.dialog_num, dialog_part)
+
+            # фарм леса
             if self.farm_flag and self.flag_action:
                 cut_tree_sound(True)
                 spr = self.forest_farm_sprites.sprites()[self.farm_tree]
@@ -177,11 +201,13 @@ class Map:
                 self.forest_sprites.remove(self.forest_sprites.sprites()[self.farm_tree])
                 self.stat_forest = str(int(self.stat_forest) + 1)
 
+            # отрисовка статов
             self.stats_sprite.draw(interface)
             stats.draw_stats_text(interface, 0, 4, '4/20')
             stats.draw_stats_text(interface, 60, 4, '5/20')
             stats.draw_stats_text(interface, 120, 4, self.stat_forest)
 
+    # функция возвращения спрайтов до области маски
     def mask(self, cam_x, cam_y, cam_zoom_x, cam_zoom_y):
         self.cut_forest.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.forest_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
@@ -191,6 +217,11 @@ class Map:
         self.icons_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.forest_farm_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
 
+    # функция возвращения флагов фарма леса и диалога
+    def get_map_flags(self):
+        return self.farm_flag, self.flag_action and self.icon_flag
+
+    # функция отрисовки вида карты
     def map_view(self, surface, map_flag):
         if map_flag:
             self.stop_flag = True

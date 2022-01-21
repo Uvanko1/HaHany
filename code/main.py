@@ -27,7 +27,7 @@ def start_the_game():
     res_zoom = res
     screen = pygame.transform.scale(window, res)
 
-    shift = 15
+    shift = 2
     frame = 0
     map_zoom_x = 16
     map_zoom_y = 9
@@ -49,6 +49,8 @@ def start_the_game():
         cam_zoom_y = 0
         key = pygame.key.get_pressed()
         pos = map_sprite.get_rect_pos()
+        icnon_flag, dialog_flag = generate_map.get_map_flags()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -67,10 +69,12 @@ def start_the_game():
                     map_flag = True
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_e:
-                    flag_action = False
+                    if not dialog_flag:
+                        flag_action = False
                 if event.key == pygame.K_m:
                     map_flag = False
                     cut_tree_sound(False)
+
             # увеличение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 4:
                 if zoom_count < 10:
@@ -80,6 +84,8 @@ def start_the_game():
                     cam_zoom_y -= map_zoom_y // 2
                     khan_x -= map_zoom_x // 2
                     khan_y -= map_zoom_y // 2
+
+            # уменьшение изображения
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 5:
                 if zoom_count > 0:
                     zoom_count -= 1
@@ -91,24 +97,25 @@ def start_the_game():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 if flag_action:
                     dialog_part += 1
-        khan_view = 'stop_' + khan_view
-        if key[pygame.K_a]:
-            cam_x += shift
-            khan_view = 'left'
-            play_music = True
-        if key[pygame.K_d]:
-            cam_x -= shift
-            khan_view = 'right'
-            play_music = True
-        if key[pygame.K_w]:
-            cam_y += shift
-            khan_view = 'bottom'
-            play_music = True
-        if key[pygame.K_s]:
-            cam_y -= shift
-            khan_view = 'top'
-            play_music = True
-        horse(play_music)
+        if not dialog_flag:
+            khan_view = 'stop_' + khan_view
+            if key[pygame.K_a]:
+                cam_x += shift
+                khan_view = 'left'
+                play_music = True
+            if key[pygame.K_d]:
+                cam_x -= shift
+                khan_view = 'right'
+                play_music = True
+            if key[pygame.K_w]:
+                cam_y += shift
+                khan_view = 'bottom'
+                play_music = True
+            if key[pygame.K_s]:
+                cam_y -= shift
+                khan_view = 'top'
+                play_music = True
+            horse(play_music)
 
         screen.fill((244, 202, 93))
         generate_map.map_view(window, map_flag)
