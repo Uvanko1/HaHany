@@ -24,6 +24,9 @@ def create_tile_group(layout, type):
             if val != '-1':
                 x = col_index * tile_size
                 y = row_index * tile_size
+                if type == 'fire':
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/fire', 0.50)
+                    sprite_group.add(sprite)
                 if type == 'animation_forest':
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/forest/Tree', 0.15)
                     print(x, y, 'forest')
@@ -59,8 +62,9 @@ def create_tile_group(layout, type):
 
 class Map:
     def __init__(self, map_data):
-        # fire_layout = import_csv_layout(map_data['fire'])
-        # self.horse_sprites = create_tile_group(fire_layout, 'fire')
+        fire_layout = import_csv_layout(map_data['fire'])
+        self.fire_spites = create_tile_group(fire_layout, 'fire')
+
         # импортирование положения и спрайтов лошадей
         test_layout = import_csv_layout(map_data['лошади'])
         self.horse_sprites = create_tile_group(test_layout, 'лошади')
@@ -155,37 +159,47 @@ class Map:
             # отрисовка и обновление спрайтов жителей
             self.npc_sprites.draw(surface)
             self.npc_sprites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
+            self.fire_spites.draw(surface)
+            self.fire_spites.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
+
+            self.one_icon.draw(surface)
+            if self.dialog_num is not None:
+                self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
             self.icons_sprite.update(cam_x + cam_zoom_x, cam_y + cam_zoom_y)
 
             self.icon_flag = False
             self.farm_flag = False
 
             # нахождение столкновений по маске и ректу
-            for val, spr in enumerate(self.npc_sprites):
-                if pygame.sprite.collide_rect(spr, khan):
-                    self.dialog_num = val
-                    self.icon_flag = True
+            for spr in self.fire_spites:
                 if pygame.sprite.collide_mask(spr, khan):
                     self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                     break
             else:
-                for spr in self.house_sprites:
+                for val, spr in enumerate(self.npc_sprites):
+                    if pygame.sprite.collide_rect(spr, khan):
+                        self.dialog_num = val
+                        self.icon_flag = True
                     if pygame.sprite.collide_mask(spr, khan):
                         self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                         break
                 else:
-                    for val, spr in enumerate(self.forest_sprites):
-                        if pygame.sprite.collide_rect(spr, khan):
-                            self.farm_flag = True
-                            self.farm_tree = val
+                    for spr in self.house_sprites:
                         if pygame.sprite.collide_mask(spr, khan):
                             self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
+                            break
+                    else:
+                        for val, spr in enumerate(self.forest_sprites):
+                            if pygame.sprite.collide_rect(spr, khan):
+                                self.farm_flag = True
+                                self.farm_tree = val
+                            if pygame.sprite.collide_mask(spr, khan):
+                                self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
 
             # отображение спрайта иконки над персонажем
             if self.icon_flag:
                 self.one_icon.add(self.icons_sprite.sprites()[self.dialog_num])
-                self.one_icon.draw(surface)
-                self.one_icon.remove(self.icons_sprite.sprites()[self.dialog_num])
 
             # отображение диалога
             if self.flag_action and self.icon_flag:
@@ -205,11 +219,12 @@ class Map:
             self.stats_sprite.draw(interface)
             stats.draw_stats_text(interface, 0, 4, '4/20')
             stats.draw_stats_text(interface, 90, 4, '5/20')
-            stats.draw_stats_text(interface, 180, 4, self.stat_forest)
+            stats.draw_stats_text(interface, 200, 4, self.stat_forest)
 
     # функция возвращения спрайтов до области маски
     def mask(self, cam_x, cam_y, cam_zoom_x, cam_zoom_y):
         self.cut_forest.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.fire_spites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.forest_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.map_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.house_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)

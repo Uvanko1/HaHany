@@ -36,6 +36,8 @@ def start_the_game():
     flag_action = False
     dialog_part = 0
     map_flag = False
+    pygame.display.set_caption('Великий Хан')
+    pygame.mouse.set_visible(False)
 
     while 1:
         play_music = False
@@ -127,9 +129,9 @@ def start_the_game():
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         screen = pygame.transform.scale(window, res_zoom)
         clock.tick(60)
-        frame += 1
-        if frame % 100 == 0:
-            pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
+        # frame += 1
+        # if frame % 100 == 0:
+        #     pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
 
 
 def quit():
