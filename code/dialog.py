@@ -6,7 +6,7 @@ ramka_sprite = pygame.sprite.Group()
 
 
 class Dialog(pygame.sprite.Sprite):
-    image = pygame.image.load('../graphics/Диалоги/ramka_1.png')
+    image = pygame.image.load('../graphics/Диалоги/ramka.png')
 
     def __init__(self):
         super().__init__(ramka_sprite)

@@ -6,7 +6,7 @@ from map import Map
 from game_data import mangolia_1
 from saves import save_position
 from map_static import MapSprite
-from sounds import horse, soundtrack_on, cut_tree_sound
+from sounds import horse, soundtrack_on, cut_tree_sound, river_sound, npc_sound
 
 pygame.init()
 window = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
@@ -22,13 +22,13 @@ flag_soundtrack = True
 def start_the_game():
     menu.close()
     soundtrack_on()
+    river_sound()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
     res = [screen_width // 4, screen_height // 4]
     res_zoom = res
     screen = pygame.transform.scale(window, res)
     shift = 15
-    frame = 0
     map_zoom_x = 16
     map_zoom_y = 9
     zoom_count = 0
@@ -49,8 +49,11 @@ def start_the_game():
         cam_zoom_x = 0
         cam_zoom_y = 0
         key = pygame.key.get_pressed()
-        pos = map_sprite.get_rect_pos()
         farm_flag, dialog_flag = generate_map.get_map_flags()
+        if dialog_flag:
+            npc_sound(True)
+        else:
+            npc_sound(False)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -61,6 +64,7 @@ def start_the_game():
                     save_position(pos_x, pos_y)
                 elif event.key == pygame.K_e:
                     flag_action = True
+
                 elif event.key == pygame.K_ESCAPE and flag_action:
                     flag_action = False
                 elif event.key == pygame.K_ESCAPE:
@@ -129,9 +133,6 @@ def start_the_game():
         window.blit(pygame.transform.scale(screen, size), (0, 0))
         screen = pygame.transform.scale(window, res_zoom)
         clock.tick(60)
-        # frame += 1
-        # if frame % 100 == 0:
-        #     pygame.display.set_caption('FPS: ' + str(round(clock.get_fps())))
 
 
 def quit():

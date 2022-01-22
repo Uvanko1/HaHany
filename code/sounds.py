@@ -4,6 +4,8 @@ pygame.mixer.init()
 pygame.mixer.music.load('../sounds/horse.mp3')
 soundtrack = pygame.mixer.Sound('../sounds/soundtrack.mp3')
 cut_tree = pygame.mixer.Sound('../sounds/cut_tree.mp3')
+river = pygame.mixer.Sound('../sounds/river.mp3')
+npc = pygame.mixer.Sound('../sounds/npc_sound.mp3')
 
 pygame.mixer.music.play(-1)
 pygame.mixer.music.pause()
@@ -27,3 +29,16 @@ def cut_tree_sound(flag):
         cut_tree.play()
     else:
         cut_tree.stop()
+
+
+def river_sound():
+    river.set_volume(0.1)
+    river.play(-1)
+
+
+def npc_sound(flag):
+    npc.set_volume(0.4)
+    if flag:
+        npc.play()
+    else:
+        npc.stop()
