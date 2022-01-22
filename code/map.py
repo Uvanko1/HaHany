@@ -25,7 +25,7 @@ def create_tile_group(layout, type):
                 x = col_index * tile_size
                 y = row_index * tile_size
                 if type == 'fire':
-                    sprite = AnimatedTile(tile_size, x, y, '../graphics/fire', 0.50)
+                    sprite = AnimatedTile(tile_size, x, y, '../graphics/fire', 0.09)
                     sprite_group.add(sprite)
                 if type == 'animation_forest':
                     sprite = AnimatedTile(tile_size, x, y, '../graphics/forest/Tree', 0.15)
