@@ -50,10 +50,6 @@ def start_the_game():
         cam_zoom_y = 0
         key = pygame.key.get_pressed()
         farm_flag, dialog_flag = generate_map.get_map_flags()
-        if dialog_flag:
-            npc_sound(True)
-        else:
-            npc_sound(False)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -10,7 +10,6 @@ from tiles import AnimatedTile, CharacterTile, StaticTile
 from khan import Khan, khan_sprite
 from sounds import cut_tree_sound
 from game_data import icon_pos_on_map
-from sounds import npc_sound
 
 khan = Khan()
 dialog = Dialog()

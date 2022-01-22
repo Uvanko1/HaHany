@@ -34,11 +34,3 @@ def cut_tree_sound(flag):
 def river_sound():
     river.set_volume(0.1)
     river.play(-1)
-
-
-def npc_sound(flag):
-    npc.set_volume(0.4)
-    if flag:
-        npc.play()
-    else:
-        npc.stop()
