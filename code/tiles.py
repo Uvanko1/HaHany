@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from support import import_folder
@@ -53,6 +55,7 @@ class AnimatedTile(Tile):
         self.animate()
         self.rect.x += cam_x
         self.rect.y += cam_y
+
 
     def get_mask(self):
         if pygame.sprite.collide_mask(self, khan):
