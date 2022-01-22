@@ -100,6 +100,7 @@ class Map:
         self.icons_sprite = icons_sprite
         self.one_icon = pygame.sprite.Group()
         self.cut_forest = pygame.sprite.Group()
+        self.quest = None
 
         # флаги
         self.icon_flag = False
@@ -211,6 +212,7 @@ class Map:
 
             # отображение диалога
             if self.flag_action and self.icon_flag:
+                self.quest = self.dialog_num
                 self.ramka_sprite.draw(interface)
                 dialog.draw_text(interface, self.dialog_num, dialog_part)
 
@@ -250,11 +252,15 @@ class Map:
 
     # функция отрисовки вида карты
     def map_view(self, surface, map_flag):
+
         if map_flag:
             self.stop_flag = True
             image = pygame.image.load('../maps/map_data/map.png')
             quest_icon = pygame.image.load('../graphics/view_map_icon/quest_icon.png')
             surface.blit(image, (0, 0))
-            surface.blit(quest_icon, icon_pos_on_map[self.dialog_num])
+            try:
+                surface.blit(quest_icon, icon_pos_on_map[self.quest])
+            except KeyError:
+                pass
         else:
             self.stop_flag = False

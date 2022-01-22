@@ -8,7 +8,8 @@ mangolia_1 = {
     'people': '../maps/mongolia/mongolian_npc.csv',
     'water': '../maps/mongolia/mongolian_water.csv',
     'house': '../maps/mongolia/mongolian_hous.csv',
-    'fire': '../maps/mongolia/mongolian_fire.csv'
+    'fire': '../maps/mongolia/mongolian_fire.csv',
+    'block': '../maps/mongolia/mongolian_none.csv'
 }
 
 dialogs = {0: ['Житель: \n'
@@ -24,4 +25,4 @@ dialogs = {0: ['Житель: \n'
                'Житель: \n'
                'Оно находится на северо-востоке от изгиба реки'
                ]}
-icon_pos_on_map = {0: (1000, 1000)}
+icon_pos_on_map = {0: (930, 630)}

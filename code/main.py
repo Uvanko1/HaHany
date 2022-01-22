@@ -1,7 +1,7 @@
 import pygame
 import pygame_menu
 
-from settings import screen_height, screen_width
+from settings import *
 from map import Map
 from game_data import mangolia_1
 from saves import save_position
@@ -22,6 +22,7 @@ flag_soundtrack = True
 def start_the_game():
     menu.close()
     soundtrack_on()
+    river_sound()
     generate_map = Map(mangolia_1)
     size = [screen_width, screen_height]
     res = [screen_width // 4, screen_height // 4]
@@ -65,7 +66,6 @@ def start_the_game():
                     flag_action = True
                 elif event.key == pygame.K_ESCAPE and flag_action:
                     flag_action = False
-                    mongols = '8/20'
                 elif event.key == pygame.K_ESCAPE:
                     menu_exit.mainloop(window)
                 # map demo
@@ -126,7 +126,7 @@ def start_the_game():
         generate_map.run(screen, window,
                          cam_x, cam_y, cam_zoom_x, cam_zoom_y,
                          khan_view, khan_x, khan_y,
-                         flag_action, dialog_part, mongols, horses)
+                         flag_action, dialog_part)
         generate_map.map_view(window, map_flag)
         pygame.display.update()
         window.blit(pygame.transform.scale(screen, size), (0, 0))
