@@ -114,7 +114,7 @@ class Map:
     def run(self, surface, interface,
             cam_x, cam_y, cam_zoom_x, cam_zoom_y,
             khan_view, khan_x, khan_y,
-            flag_action, dialog_part):
+            flag_action, dialog_part, mongols, horses):
 
         self.khan_view = khan_view
         self.flag_action = flag_action
@@ -225,8 +225,8 @@ class Map:
 
             # отрисовка статов
             self.stats_sprite.draw(interface)
-            stats.draw_stats_text(interface, 0, 4, '4/20')
-            stats.draw_stats_text(interface, 90, 4, '5/20')
+            stats.draw_stats_text(interface, 0, 4, horses)
+            stats.draw_stats_text(interface, 90, 4, mongols)
             stats.draw_stats_text(interface, 200, 4, self.stat_forest)
 
     # функция возвращения спрайтов до области маски

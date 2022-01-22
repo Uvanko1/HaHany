@@ -56,7 +56,6 @@ class AnimatedTile(Tile):
         self.rect.x += cam_x
         self.rect.y += cam_y
 
-
     def get_mask(self):
         if pygame.sprite.collide_mask(self, khan):
             pass
