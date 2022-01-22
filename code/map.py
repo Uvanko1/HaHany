@@ -6,9 +6,10 @@ from dialog import ramka_sprite, Dialog
 from map_static import map_sprite
 from support import import_csv_layout, import_cut_graphic
 from settings import tile_size
-from tiles import AnimatedTile, CharacterTile, StaticTile, list_spawn_pos
+from tiles import AnimatedTile, CharacterTile, StaticTile
 from khan import Khan, khan_sprite
 from sounds import cut_tree_sound
+from game_data import icon_pos_on_map
 
 khan = Khan()
 dialog = Dialog()
@@ -184,6 +185,13 @@ class Map:
                     if pygame.sprite.collide_mask(spr, khan):
                         self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
                         break
+                for val, spr in enumerate(self.npc_sprites):
+                    if pygame.sprite.collide_rect(spr, khan):
+                        self.dialog_num = val
+                        self.icon_flag = True
+                    if pygame.sprite.collide_mask(spr, khan):
+                        self.mask(cam_x, cam_y, cam_zoom_x, cam_zoom_y)
+                        break
                 else:
                     for spr in self.house_sprites:
                         if pygame.sprite.collide_mask(spr, khan):
@@ -231,6 +239,10 @@ class Map:
         self.npc_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.icons_sprite.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
         self.forest_farm_sprites.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.anim_water_sprites_1.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.anim_water_sprites_2.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.anim_water_sprites_3.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
+        self.anim_water_sprites_4.update(-cam_x + cam_zoom_x, -cam_y + cam_zoom_y)
 
     # функция возвращения флагов фарма леса и диалога
     def get_map_flags(self):
@@ -241,6 +253,8 @@ class Map:
         if map_flag:
             self.stop_flag = True
             image = pygame.image.load('../maps/map_data/map.png')
+            quest_icon = pygame.image.load('../graphics/view_map_icon/quest_icon.png')
             surface.blit(image, (0, 0))
+            surface.blit(quest_icon, icon_pos_on_map[self.dialog_num])
         else:
             self.stop_flag = False

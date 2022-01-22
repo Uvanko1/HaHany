@@ -9,7 +9,7 @@ from map_static import MapSprite
 from sounds import horse, soundtrack_on, cut_tree_sound
 
 pygame.init()
-window = pygame.display.set_mode((screen_width, screen_height))
+window = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 menu = pygame_menu.Menu('Татаро-монголы', screen_width, screen_height, theme=pygame_menu.themes.THEME_GREEN)
 menu.add.image('../graphics/menu/menu.png')
 menu_exit = pygame_menu.Menu('Татаро-монголы', screen_width // 2, screen_height // 2,
@@ -27,7 +27,7 @@ def start_the_game():
     res = [screen_width // 4, screen_height // 4]
     res_zoom = res
     screen = pygame.transform.scale(window, res)
-    shift = 2
+    shift = 15
     frame = 0
     map_zoom_x = 16
     map_zoom_y = 9
