@@ -44,7 +44,6 @@ def start_the_game():
 
     while 1:
         play_music = False
-        menu.close()
         cam_x = 0
         cam_y = 0
         khan_x = 0
@@ -121,7 +120,6 @@ def start_the_game():
                 khan_view = 'top'
                 play_music = True
             horse(play_music)
-
         screen.fill('grey')
 
         generate_map.run(screen, window,
